@@ -4,5 +4,6 @@ define ([], function () {
 		this._id = id;
 	};
 
+
 	return Entity;
 });

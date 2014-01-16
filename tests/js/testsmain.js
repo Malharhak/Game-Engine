@@ -12,8 +12,9 @@
 		urlArgs: "d=" + Date.now()
 	});
 	// loading mocha
-	console.log("coucou");
-	require(['tests'], function () {
-		if (window.mochaPhantomJS) {mochaPhantomJS.run();}
-		else {mocha.run();}
+	require(['jage'], function () {
+		require(['tests'], function () {
+			if (window.mochaPhantomJS) {mochaPhantomJS.run();}
+			else {mocha.run();}
+		});
 	});

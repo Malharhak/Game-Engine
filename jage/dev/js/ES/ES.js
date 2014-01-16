@@ -1,8 +1,7 @@
-define (['j.Entity', 'j.Component'], function (Entity, Component) {
+define (['j.Entity'], function (Entity) {
 	var ES = function () {
-
+		this.__l = "";
 	};
-
 	ES.prototype.registerSystem = function (name, obj) {
 		this.systens[name].push(obj);
 		for (var i in obj) {
@@ -24,7 +23,7 @@ define (['j.Entity', 'j.Component'], function (Entity, Component) {
 		this.componentData[name] = {};
 		this.componentCounters[name] = 0;
 	};
-	ES.prototye.createEntity = function (label) {
+	ES.prototype.createEntity = function (label) {
 		this.entities[this.entitiesCounter] = new Entity(label, this.entitiesCounter);
 		return this.entitiesCounter++;
 	};
