@@ -14,11 +14,22 @@ requirejs.config ({
 		'j.ES': 'ES/ES',
 		'j.System' : 'ES/System',
 		'j.Entity' : 'ES/Entity',
+		'j.systems' : 'ES/systems',
+		'j.componentTypes' : 'ES/componentTypes',
+		'j.defaultComponents' : 'defaultComponents',
+		'j.defaultSystems': 'defaultSystems',
+
+		// Components
+		'j.Transform' : 'components/Transform',
 
 		// Enums
 		'j.GameStates': 'GameStates',
 
-
+		// Utils
+		'j.requestAnimFrame': 'requestAnimFrame',
+		'j.initJage': 'initJage',
+		'j.defaultConfig' : 'defaultConfig',
+		'j.canvas' : 'canvas',
 		// External libs
 		'jquery' : '../libs/jquery',
 		'underscore' : '../libs/underscore'

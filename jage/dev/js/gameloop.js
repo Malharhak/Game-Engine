@@ -1,4 +1,8 @@
-define (['j.GameStates', 'j.sceneManager'], function (GameStates, sceneManager) {
+define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
+	'j.initJage'
+	], function (GameStates, sceneManager, requestAnimFrame,
+		initJage
+		) {
 	var state = GameStates.STOPPED;
 	function loop () {
 		if (state === GameStates.RUNNING) {
@@ -10,7 +14,7 @@ define (['j.GameStates', 'j.sceneManager'], function (GameStates, sceneManager) 
 			render();
 			postRender();
 		}
-		window.requestAnimationFrame (loop);
+		requestAnimFrame(loop);
 	}
 	function inputs() {
 		sceneManager.activeScene.launchEV('inputs');
@@ -34,7 +38,8 @@ define (['j.GameStates', 'j.sceneManager'], function (GameStates, sceneManager) 
 		sceneManager.activeScene.launchEV('postRender');
 	}
 
-	function init () {
+	function init (options) {
+		initJage(options);
 		loop();
 		state = GameStates.LOADING;
 		load();

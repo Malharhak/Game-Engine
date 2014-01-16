@@ -1,9 +1,9 @@
-define (['j.Entity'], function (Entity) {
+define (['j.Entity', 'j.componentTypes', 'j.systems'], function (Entity, componentTypes, systems) {
 	var ES = function () {
 		this.__l = "";
 	};
 	ES.prototype.registerSystem = function (name, obj) {
-		this.systens[name].push(obj);
+		systems.registerSystem(name, obj);
 		for (var i in obj) {
 			if (typeof i === "function") {
 				this.addFunctionsUsed(i, name);
@@ -19,7 +19,7 @@ define (['j.Entity'], function (Entity) {
 	};
 
 	ES.prototype.registerComponent = function (name, klass) {
-		this.componentTypes[name] = klass;
+		componentTypes.registerComponent(name, klass);
 		this.componentData[name] = {};
 		this.componentCounters[name] = 0;
 	};
@@ -28,7 +28,7 @@ define (['j.Entity'], function (Entity) {
 		return this.entitiesCounter++;
 	};
 	ES.prototype.createComponent = function (compType, values) {
-		var component = new this.componentTypes[compType](values);
+		var component = new componentTypes[compType](values);
 		component._id = this.componentCounters[compType];
 		component._type = compType;
 		this.componentData[compType][this.componentCounters[compType]] = component;
