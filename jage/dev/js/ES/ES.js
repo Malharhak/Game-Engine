@@ -6,7 +6,7 @@ define (['j.Entity', 'j.Component'], function (Entity, Component) {
 	ES.prototype.registerSystem = function (name, obj) {
 		this.systens[name].push(obj);
 		for (var i in obj) {
-			if (typeof i == "function") {
+			if (typeof i === "function") {
 				this.addFunctionsUsed(i, name);
 			}
 		}
@@ -57,7 +57,7 @@ define (['j.Entity', 'j.Component'], function (Entity, Component) {
 	ES.prototype.findAllComponents = function (componentTypes) {
 		var res = {};
 		for (var i = 0; i < componentTypes.length; i++) {
-			res{componentTypes[i]} = this.componentData[componentTypes[i]];
+			res[componentTypes[i]] = this.componentData[componentTypes[i]];
 		}
 		return res;
 	};
