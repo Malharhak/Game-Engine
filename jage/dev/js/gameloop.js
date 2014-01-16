@@ -1,13 +1,15 @@
 define (['j.GameStates', 'j.sceneManager'], function (GameStates, sceneManager) {
 	var state = GameStates.STOPPED;
 	function loop () {
-		inputs();
-		preUpdate();
-		update();
-		postUpdate();
-		preRender();
-		render();
-		postRender();
+		if (state === GameStates.RUNNING) {
+			inputs();
+			preUpdate();
+			update();
+			postUpdate();
+			preRender();
+			render();
+			postRender();
+		}
 		window.requestAnimationFrame (loop);
 	}
 	function inputs() {
@@ -51,6 +53,7 @@ define (['j.GameStates', 'j.sceneManager'], function (GameStates, sceneManager) 
 		init: init,
 		load: load,
 		pause: pause,
-		resume: resume
+		resume: resume,
+		sceneManager: sceneManager
 	};
 });

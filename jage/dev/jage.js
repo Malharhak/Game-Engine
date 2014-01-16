@@ -14,7 +14,6 @@ requirejs.config ({
 		'j.ES': 'ES/ES',
 		'j.System' : 'ES/System',
 		'j.Entity' : 'ES/Entity',
-		'j.Component': 'ES/Component',
 
 		// Enums
 		'j.GameStates': 'GameStates',
@@ -22,8 +21,7 @@ requirejs.config ({
 
 		// External libs
 		'jquery' : '../libs/jquery',
-		'underscore' : '../libs/underscore',
-		'j.test' : 'test'
+		'underscore' : '../libs/underscore'
 	},
 	shim : {
 		'jquery' : {
@@ -36,9 +34,7 @@ requirejs.config ({
 	urlArgs: "d=" + Date.now()
 });
 
-requirejs(['j.main', 'j.test'], function (main, test) {
+requirejs(['j.main'], function (main) {
 	window.jage = main;
-	console.log(main);
-	test.x++;
 	return main;
 });

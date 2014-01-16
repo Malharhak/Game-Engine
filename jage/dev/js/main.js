@@ -1,4 +1,4 @@
-define ([], function () {
-	return "lol";
+define (['j.gameloop'], function (gameloop) {
+	return gameloop;
 
 });

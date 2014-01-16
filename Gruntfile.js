@@ -13,6 +13,15 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        shell: {
+        	'mocha-phantomjs': {
+        		command: 'mocha-phantomjs -R dot http://localhost:8000/tests/index.html',
+        		options: {
+        			stdout: true,
+        			stderr: true
+        		}
+        	}
+        },
         requirejs: {
         	// Builds the engine in a single file
         		engine: {
@@ -52,6 +61,17 @@ module.exports = function(grunt) {
 	            files: {
 	                src: ['samples/js/**/*.js']
 	            }
+        		},
+        		tests: {
+	            options: {
+	                curly: true,
+	                eqeqeq: true,
+	                eqnull: true,
+	                browser: true
+	            },
+	            files: {
+	                src: ['tests/js/**/*.js']
+	            }
         		}
         },
         concurrent: {
@@ -75,6 +95,15 @@ module.exports = function(grunt) {
             samples: {
                 files: ['samples/js/**/*.js'],
                 tasks: ['jshint:samples']
+            },
+            tests: {
+            	files: ['tests/js/**/*.js'],
+            	tasks: ['jshint:tests', 'shell:mocha-phantomjs'],
+            	options: {
+            		livereload: {
+            			port: 35728
+            		}
+            	}
             }
         }
     });
@@ -84,8 +113,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerTask('build', ['sass', 'jshint', 'requirejs', 'concurrent']);
 
-    grunt.registerTask('launch', ['concurrent']);
+    grunt.registerTask('launch', ['watch']);
 };
