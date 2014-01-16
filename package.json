@@ -1,0 +1,17 @@
+{
+    "name": "application-name",
+    "version": "0.0.1",
+    "private": true,
+    "devDependencies": {
+    		"mocha" : "latest",
+    		"mocha-phantomjs": "latest",
+    		"should" : "latest",
+        "grunt": "~0.4.2",
+        "grunt-contrib-jshint": "~0.6.3",
+        "grunt-contrib-sass": "~0.6.0",
+        "grunt-contrib-requirejs": "~0.4.1",
+        "grunt-contrib-copy": "~0.5.0",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt-concurrent": "0.4.2"
+    }
+}
