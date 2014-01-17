@@ -1,5 +1,8 @@
 define(['j.System', 'j.canvas'], function (System, canvas) {
-	var renderingSystem = new System(["renderer"], false);
+	var renderingSystem = new System({
+		usedComponents: ["renderer"]
+	});
+
 	renderingSystem.render = function (scene, entity) {
 		var renderer = scene.getComponentForEntity("renderer", entity._id);
 		canvas.ctx.fillStyle = renderer.color;

@@ -1,6 +1,7 @@
-define (['j.Renderer'], function (Renderer) {
+define (['j.Renderer', 'j.Rigidbody'], function (Renderer, Rigidbody) {
 	var defaultComponents = {
-		"renderer" : Renderer
+		"renderer" : Renderer,
+		'rigidbody' : Rigidbody
 	};
 
 	return defaultComponents;

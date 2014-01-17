@@ -1,6 +1,6 @@
 /* Main scene class. This contains all entities, components and everything in the current scene */
-define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes'],
-	function (ES, _, systems, componentTypes) {
+define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.time'],
+	function (ES, _, systems, componentTypes, world, time) {
 	var Scene = function (description) {
 		this.description = description;
 		this.name = description.name;
@@ -8,7 +8,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes'],
 		this.entities = {};
 		this.componentData = {};
 		this.componentCounters = {};
-		this.entityComponents = {};
+	this.entityComponents = {};
 		this.functionsUsed = {};
 	};
 	_.extend(Scene.prototype, ES.prototype);
@@ -33,6 +33,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes'],
 	};
 
 	Scene.prototype.load = function (callback) {
+		world.setProperties(this.description.worldProperties);
 		for (var i = 0; i < this.description.content.length; i++) {
 			var entityDesc = this.description.content[i];
 			var entity = this.createEntity({
@@ -44,6 +45,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes'],
 				this.createComponentAndAddTo(entity, compType, values);
 			}
 		}
+		time.start();
 		callback();
 	};
 

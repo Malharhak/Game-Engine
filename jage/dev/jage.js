@@ -9,6 +9,8 @@ requirejs.config ({
 
 		// Main classes
 		'j.Scene' : 'Scene',
+		'j.Vector2' : 'Vector2',
+		'j.Rectangle' : 'Rectangle',
 
 		// ES classes
 		'j.ES': 'ES/ES',
@@ -22,19 +24,28 @@ requirejs.config ({
 		'j.currentScene' : 'currentScene',
 		// Components
 		'j.Renderer' : 'components/Renderer',
+		'j.Rigidbody' : 'components/Rigidbody',
+
+		// Physics shapes
+		'j.CircleCollider' : 'components/shapes/CircleCollider',
+		'j.BoxCollider' : 'components/shapes/BoxCollider',
 
 		// Systems
 		'j.renderingSystem' : 'systems/renderingSystem',
+		'j.physicsSystem' : 'systems/physicsSystem',
+		'j.screenSystem' : 'systems/screenSystem',
 
 		// Enums
 		'j.GameStates': 'GameStates',
-
+		'j.Shapes' : 'Shapes',
 		// Utils
 		'j.requestAnimFrame': 'requestAnimFrame',
 		'j.initJage': 'initJage',
 		'j.defaultConfig' : 'defaultConfig',
 		'j.canvas' : 'canvas',
+		'j.world' : 'world',
 		'j.emptyScene' : 'defaultScene',
+		'j.time' : 'time',
 
 		// External libs
 		'jquery' : '../libs/jquery',
