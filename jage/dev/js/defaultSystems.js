@@ -1,6 +1,8 @@
-define (['j.renderingSystem'], function (renderingSystem) {
+define (['j.renderingSystem', 'j.physicsSystem', 'j.screenSystem'], function (renderingSystem, physicsSystem, screenSystem) {
 	var defaultSystems = {
-		'rendering' : renderingSystem
+		'j.screen' : screenSystem,
+		'j.rendering' : renderingSystem,
+		'j.physics' : physicsSystem
 	};
 
 	return defaultSystems;

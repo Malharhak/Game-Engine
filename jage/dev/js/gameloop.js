@@ -1,15 +1,17 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
-	'j.initJage', 'j.currentScene'
+	'j.initJage', 'j.currentScene', 'j.time'
 	], function (GameStates, sceneManager, requestAnimFrame,
-		initJage, currentScene
+		initJage, currentScene, time
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
 		if (state === GameStates.RUNNING) {
 			inputs();
+			time.preUpdate();
 			preUpdate();
 			update();
 			postUpdate();
+			time.postUpdate();
 			preRender();
 			render();
 			postRender();
