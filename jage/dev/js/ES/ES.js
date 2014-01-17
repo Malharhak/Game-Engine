@@ -1,4 +1,5 @@
-define (['j.Entity', 'j.componentTypes', 'j.systems'], function (Entity, componentTypes, systems) {
+define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
+	function (Entity, componentTypes, systems, _) {
 	var ES = function () {
 		this.__l = "";
 	};
@@ -23,14 +24,20 @@ define (['j.Entity', 'j.componentTypes', 'j.systems'], function (Entity, compone
 		this.componentData[name] = {};
 		this.componentCounters[name] = 0;
 	};
-	ES.prototype.createEntity = function (label) {
-		this.entities[this.entitiesCounter] = new Entity(label, this.entitiesCounter);
+	ES.prototype.createEntity = function (params) {
+		if (typeof params !== "object") {
+			params = {};
+		}
+		params.id = this.entitiesCounter;
+		this.entities[this.entitiesCounter] = new Entity(params);
+
 		return this.entitiesCounter++;
 	};
 	ES.prototype.createComponent = function (compType, values) {
 		var component = new componentTypes[compType](values);
 		component._id = this.componentCounters[compType];
 		component._type = compType;
+		_.extend(component, values);
 		this.componentData[compType][this.componentCounters[compType]] = component;
 		return this.componentCounters[compType]++;
 	};
@@ -51,8 +58,22 @@ define (['j.Entity', 'j.componentTypes', 'j.systems'], function (Entity, compone
 	};
 
 	ES.prototype.getComponentValue = function (componentType, componentId) {
-		return _.clone(this.componentData[componentType][componentId]);
+		return this.componentData[componentType][componentId];
 	};
+	ES.prototype.getComponentForEntity = function (componentType, entityId) {
+		var dataIds = this.entityComponents[entityId][componentType];
+		if (dataIds.length === 1) {
+			return this.getComponentValue(componentType, dataIds[0]);
+		} else if (dataIds.length === 0){
+			return false;
+		}
+		var res = [];
+		for (var i = 0; i < dataIds.length; i++) {
+			res.push(this.getComponentValue(componentType, dataIds[i]));
+		}
+		return res;
+	};
+
 	ES.prototype.findAllComponents = function (componentTypes) {
 		var res = {};
 		for (var i = 0; i < componentTypes.length; i++) {
@@ -67,6 +88,23 @@ define (['j.Entity', 'j.componentTypes', 'j.systems'], function (Entity, compone
 		for (var i = 0; i < components.length; i++) {
 			this.setComponent(components[i]);
 		}
+	};
+
+	ES.prototype.getEntitiesForComponents = function (components) {
+		var res = [];
+		for (var i in this.entityComponents) {
+			var valid = true;
+			for (var c = 0; c < components.length; c++) {
+				if (!this.entityComponents[i].hasOwnProperty(components[c])) {
+					valid = false;
+					break;
+				}
+			}
+			if (valid) {
+				res.push(this.entities[i]);
+			}
+		}
+		return res;
 	};
 
 	return ES;

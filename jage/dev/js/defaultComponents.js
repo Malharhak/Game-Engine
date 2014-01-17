@@ -1,6 +1,6 @@
-define (['j.Transform'], function (Transform) {
+define (['j.Renderer'], function (Renderer) {
 	var defaultComponents = {
-		"transform" : Transform
+		"renderer" : Renderer
 	};
 
 	return defaultComponents;

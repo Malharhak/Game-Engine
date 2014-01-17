@@ -2,8 +2,9 @@ define ([], function () {
 	var GameStates = {
 		STOPPED: 0,
 		LOADING: 1,
-		RUNNING: 2,
-		PAUSED: 3
+		LOADINGSCENE: 2,
+		RUNNING: 3,
+		PAUSED: 4
 	};
 
 	return GameStates;

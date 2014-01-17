@@ -11,7 +11,7 @@ define (['jquery'], function ($) {
 			'width' : options.width,
 			'height': options.height
 		});
-		this.ctx = this.canvas.getContext('2d');
+		this.ctx = this.canvas[0].getContext('2d');
 	};
 
 	return new Canvas();
