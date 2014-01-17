@@ -1,5 +1,6 @@
 define([], function () {
 	var defaultConfig = {
+		debug: true,
 		screen: {
 			mainContainer: "#gameContainer",
 			renderingMode: 'fixedResolution',
@@ -10,17 +11,18 @@ define([], function () {
 			debug: true
 		},
 		world: {
-			unitSize: {
-				x: 100,
-				y: 100
-			},
+			unitSize: 50,
 			boundaries: {
-				x: 5,
+				x: 30,
 				y: 5
 			}
 		},
 		camera: {
-			distance: 1
+			distance: 1,
+			width: 12,
+			height: 8,
+			x: 0,
+			y: 0
 		}
 	};
 

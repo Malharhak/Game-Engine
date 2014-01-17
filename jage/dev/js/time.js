@@ -18,6 +18,14 @@ define([], function () {
 		this.lastTime = (Date.now() / 1000);
 		this.time = (Date.now() / 1000);
 	};
+	Time.prototype.pause = function () {
+		this.pauseTime = (Date.now() / 1000);
+	};
+
+	Time.prototype.resume = function () {
+		this.resumeTime = (Date.now() / 1000);
+		this.lastTime = this.resumeTime;
+	};
 
 	return new Time();
 });

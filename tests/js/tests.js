@@ -49,7 +49,7 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 					cmp = sceneManager.activeScene.createComponentAndAddTo(
 							ent,
 							"renderer",
-							{width: 20});
+							{width: 0.2});
 					(typeof cmp).should.equal("number");
 				});
 			});
@@ -57,18 +57,18 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 			describe (".getComponentValue", function () {
 				it('should get a renderer with width 20 and height 40', function () {
 					cmpValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					cmpValue.should.have.property('width', 20);
-					cmpValue.should.have.property('height', 40);
+					cmpValue.should.have.property('width', 0.2);
+					cmpValue.should.have.property('height', 0.4);
 				});
 			});
 			describe('.setComponent', function () {
 				it ('should set renderer to width 10 height 30', function () {
-					cmpValue.width = 10;
-					cmpValue.height = 30;
+					cmpValue.width = 0.1;
+					cmpValue.height = 0.3;
 					//sceneManager.activeScene.setComponent(cmpValue);
 					var nValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					nValue.should.have.property('width', 10);
-					nValue.should.have.property('height', 30);
+					nValue.should.have.property('width', 0.1);
+					nValue.should.have.property('height', 0.3);
 				});
 			});
 			var entities = [];
@@ -85,7 +85,7 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 				it('should find the renderer for the first entity', function () {
 					rend = sceneManager.activeScene.getComponentForEntity("renderer", entities[0]._id);
 					(typeof rend).should.equal("object");
-					rend.should.have.property("width", 10);
+					rend.should.have.property("width", 0.1);
 				});
 			});
 		});

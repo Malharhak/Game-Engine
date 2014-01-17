@@ -1,7 +1,7 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
-	'j.initJage', 'j.currentScene', 'j.time'
+	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui'
 	], function (GameStates, sceneManager, requestAnimFrame,
-		initJage, currentScene, time
+		initJage, currentScene, time, $, config, dat
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
@@ -64,9 +64,37 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 	}
 	function pause () {
 		state = GameStates.PAUSED;
+		time.pause();
 	}
 	function resume () {
 		state = GameStates.RUNNING;
+		time.resume();
+	}
+
+	function togglePause () {
+			if (state === GameStates.PAUSED) {
+				resume();
+			} else {
+				pause();
+			}
+	}
+	$(window).on('keydown', function (event) {
+		if (event.keyCode === 80) {
+			togglePause();
+		}
+	});
+
+	if (config.debug) {
+		var lol = {
+			pause : function () {
+				togglePause();
+			}
+		};
+
+		var gui = new dat.GUI();
+		gui.add(time, 'timeScale', -2, 2);
+		gui.add(config, 'debug');
+		gui.add(lol, 'pause');
 	}
 
 	return {
@@ -75,6 +103,8 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		pause: pause,
 		resume: resume,
 		sceneManager: sceneManager,
-		launchScene: launchScene
+		launchScene: launchScene,
+		config: config,
+		time: time
 	};
 });
