@@ -1,11 +1,15 @@
-define (['underscore', 'j.Scene'], function (_, Scene) {
+define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene'],
+	function (_, Scene, currentScene, emptyScene) {
 	var SceneManager = function () {
 		this.sceneDescriptions = {};
 		this.scenes = {};
-		this.activeScene = "default";
+		this.activeScene = new Scene(emptyScene);
 	};
 	SceneManager.prototype.registerScenes = function (scenes) {
 		_.extend(this.sceneDescriptions, scenes);
+	};
+	SceneManager.prototype.registerScene = function (name, scene) {
+		this.sceneDescriptions[name] = scene;
 	};
 
 	SceneManager.prototype.changeScene = function (scene, callback) {

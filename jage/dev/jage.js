@@ -14,13 +14,17 @@ requirejs.config ({
 		'j.ES': 'ES/ES',
 		'j.System' : 'ES/System',
 		'j.Entity' : 'ES/Entity',
+		'j.Transform': 'ES/Transform',
 		'j.systems' : 'ES/systems',
 		'j.componentTypes' : 'ES/componentTypes',
 		'j.defaultComponents' : 'defaultComponents',
 		'j.defaultSystems': 'defaultSystems',
-
+		'j.currentScene' : 'currentScene',
 		// Components
-		'j.Transform' : 'components/Transform',
+		'j.Renderer' : 'components/Renderer',
+
+		// Systems
+		'j.renderingSystem' : 'systems/renderingSystem',
 
 		// Enums
 		'j.GameStates': 'GameStates',
@@ -30,6 +34,8 @@ requirejs.config ({
 		'j.initJage': 'initJage',
 		'j.defaultConfig' : 'defaultConfig',
 		'j.canvas' : 'canvas',
+		'j.emptyScene' : 'defaultScene',
+
 		// External libs
 		'jquery' : '../libs/jquery',
 		'underscore' : '../libs/underscore'

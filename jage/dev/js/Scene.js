@@ -1,21 +1,49 @@
 /* Main scene class. This contains all entities, components and everything in the current scene */
-define (['j.ES', 'underscore', 'j.systems'], function (ES, _, systems) {
+define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes'],
+	function (ES, _, systems, componentTypes) {
 	var Scene = function (description) {
+		this.description = description;
+		this.name = description.name;
 		this.entitiesCounter = 0;
-		this.componentsCounter = 0;
 		this.entities = {};
 		this.componentData = {};
 		this.componentCounters = {};
 		this.entityComponents = {};
 		this.functionsUsed = {};
 	};
-	_.extend(Scene, ES);
+	_.extend(Scene.prototype, ES.prototype);
 
 	Scene.prototype.init = function (callback) {
+		for (var i in componentTypes) {
+			this.componentData[i] = {};
+			this.componentCounters[i] = 0;
+		}
+		for (var s in systems) {
+			for (var f in systems[s]) {
+				if (typeof systems[s][f] === "function") {
+					if (typeof this.functionsUsed[f] === "object") {
+						this.functionsUsed[f].push(s);
+					} else {
+						this.functionsUsed[f] = [s];
+					}
+				}
+			}
+		}
 		callback();
 	};
 
 	Scene.prototype.load = function (callback) {
+		for (var i = 0; i < this.description.content.length; i++) {
+			var entityDesc = this.description.content[i];
+			var entity = this.createEntity({
+				transform : entityDesc.transform
+			});
+			for (var c in entityDesc.components) {
+				var compType = c;
+				var values = entityDesc.components[c];
+				this.createComponentAndAddTo(entity, compType, values);
+			}
+		}
 		callback();
 	};
 
@@ -29,21 +57,22 @@ define (['j.ES', 'underscore', 'j.systems'], function (ES, _, systems) {
 
 	// Launches an event function, IE inputs, preUpdate, render...
 	Scene.prototype.launchEV = function (ev) {
-		if (this.functionsUsed[ev] !== undefined) {
+
+		if (typeof this.functionsUsed[ev] === "object") {
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
-				var system = systems[this.functionsUsed[ev][i]];
-				var comps = this.findAllComponents(system.usedComponents);
+				var systemName = this.functionsUsed[ev][i];
+				var system = systems[systemName];
 				if (system.globalSystem) {
-					var nComps = systems[i][ev](comps);
-					this.setComponents(nComps);
+					system[ev](this);
 				} else {
-					for (var c = 0; c < comps.length; i++) {
-						var nComp = systems[i][ev](comps[c]);
-						this.setComponent(nComp);
+					var comps = this.getEntitiesForComponents(system.usedComponents);
+					for (var c = 0; c < comps.length; c++) {
+						system[ev](this, comps[c]);
 					}
 				}
 			}
 		}
+
 	};
 
 	return Scene;

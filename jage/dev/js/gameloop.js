@@ -1,7 +1,7 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
-	'j.initJage'
+	'j.initJage', 'j.currentScene'
 	], function (GameStates, sceneManager, requestAnimFrame,
-		initJage
+		initJage, currentScene
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
@@ -37,15 +37,28 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 	function postRender () {
 		sceneManager.activeScene.launchEV('postRender');
 	}
-
-	function init (options) {
-		initJage(options);
-		loop();
-		state = GameStates.LOADING;
-		load();
+	function launchScene (name, callback) {
+		state = GameStates.LOADINGSCENE;
+		sceneManager.changeScene(name, function () {
+			if (typeof callback === "function") {
+				state = GameStates.RUNNING;
+				callback();
+			}
+		});
 	}
-	function load () {
+	function init (options, callback) {
+		initJage(options, function () {
+			loop();
+
+			state = GameStates.LOADING;
+			load(options, callback);
+		});
+	}
+	function load (options, callback) {
 		state = GameStates.RUNNING;
+		if (typeof callback === "function") {
+			callback();
+		}
 	}
 	function pause () {
 		state = GameStates.PAUSED;
@@ -59,6 +72,7 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		load: load,
 		pause: pause,
 		resume: resume,
-		sceneManager: sceneManager
+		sceneManager: sceneManager,
+		launchScene: launchScene
 	};
 });

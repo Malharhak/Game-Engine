@@ -16,5 +16,6 @@
 		require(['j.main'], function (jage) {
 			console.log("loaded jage");
 			console.log(jage);
+			jage.init();
 		});
 	});
