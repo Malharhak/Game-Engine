@@ -6,11 +6,15 @@ requirejs.config ({
 		'j.main' : 'main',
 		'j.gameloop' : 'gameloop',
 		'j.sceneManager' : 'sceneManager',
+		'j.viewport' : 'viewport',
+		'j.camera' : 'camera',
+		'j.config' : 'config',
 
 		// Main classes
 		'j.Scene' : 'Scene',
 		'j.Vector2' : 'Vector2',
 		'j.Rectangle' : 'Rectangle',
+		'j.Point': 'Point',
 
 		// ES classes
 		'j.ES': 'ES/ES',
@@ -46,10 +50,13 @@ requirejs.config ({
 		'j.world' : 'world',
 		'j.emptyScene' : 'defaultScene',
 		'j.time' : 'time',
+		'j.aabb' : 'aabb',
+		'j.units' : 'units',
 
 		// External libs
 		'jquery' : '../libs/jquery',
-		'underscore' : '../libs/underscore'
+		'underscore' : '../libs/underscore',
+		'dat.gui' : '../libs/dat.gui.min'
 	},
 	shim : {
 		'jquery' : {
@@ -57,6 +64,9 @@ requirejs.config ({
 		},
 		'underscore' : {
 			'exports' : '_'
+		},
+		'dat.gui': {
+			'exports' : 'dat'
 		}
 	},
 	urlArgs: "d=" + Date.now()

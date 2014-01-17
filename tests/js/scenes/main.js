@@ -7,22 +7,24 @@ define (['j.Shapes'], function (Shapes) {
 	content: [
 			{
 				"transform": {
-					"x" : 200,
-					"y" : 200
+					"x" : 3,
+					"y" : 3,
+					"angle" : 0.3
 				},
 				"components": {
 					"renderer": {
-						"width": 50,
-						"height": 50,
-						"color" : "blue"
+						"width": 1.9,
+						"height": 1.9,
+						"color" : "orange"
 					},
 					"rigidbody": {
 						"shape": Shapes.CIRCLE,
+						"mass": 0.5,
 						"properties": {
-							"radius" : 50,
+							"radius" : 1.5,
 							"center": {
-								"x" : 25,
-								"y" : 25
+								"x" : 0,
+								"y" : 0
 							}
 						}
 					}
@@ -31,22 +33,23 @@ define (['j.Shapes'], function (Shapes) {
 
 			{
 				"transform": {
-					"x": 20,
-					"y": 100
+					"x": 8,
+					"y": 4
 				},
 				"components": {
 					"renderer": {
-						"width": 100,
-						"height": 100,
-						"color" : "red"
+						"width": 0.9,
+						"height": 0.9,
+						"color" : "brown"
 					},
 					"rigidbody": {
 						"shape": Shapes.CIRCLE,
+						"mass": 0.2,
 						"properties": {
-							"radius" : 100,
+							"radius" : 0.6,
 							"center": {
-								"x" : 50,
-								"y" : 50
+								"x" : 0,
+								"y" : 0
 							}
 						}
 					}
@@ -55,25 +58,31 @@ define (['j.Shapes'], function (Shapes) {
 
 			{
 				"transform": {
-					"x": 400,
-					"y": 200
+					"x": 4,
+					"y": 6,
+					"angle": 0.6
 				},
 				"components": {
 					"renderer": {
-						"width": 50,
-						"height": 50,
-						"color" : "red"
+						"width": 0.5,
+						"height": 0.5,
+						"color" : "red",
+						"pivot" : {
+							"x" : 0.25,
+							"y" : 0.25
+						}
 					},
 					"rigidbody": {
 						"shape": Shapes.BOX,
+						"mass": 1,
 						"properties": {
 							"start" : {
-								"x" : -10,
-								"y" : -10
+								"x" : -0.3,
+								"y" : -0.3
 							},
 							"end" : {
-								"x" : 70,
-								"y" : 70
+								"x" : 0.6,
+								"y" : 0.6
 							}
 						}
 					}

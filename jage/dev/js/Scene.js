@@ -46,6 +46,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 			}
 		}
 		time.start();
+		this.launchEV('start');
 		callback();
 	};
 
