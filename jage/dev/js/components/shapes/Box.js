@@ -1,7 +1,7 @@
 define (["j.Rectangle"], function (Rectangle) {
-	var BoxCollider = function (properties) {
+	var Box = function (properties) {
 		this.box = new Rectangle(properties);
 	};
 
-	return BoxCollider;
+	return Box;
 });

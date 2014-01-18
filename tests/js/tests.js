@@ -48,8 +48,7 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 				it('should create a position and add it to the entity', function () {
 					cmp = sceneManager.activeScene.createComponentAndAddTo(
 							ent,
-							"renderer",
-							{width: 0.2});
+							"renderer");
 					(typeof cmp).should.equal("number");
 				});
 			});
@@ -57,8 +56,7 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 			describe (".getComponentValue", function () {
 				it('should get a renderer with width 20 and height 40', function () {
 					cmpValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					cmpValue.should.have.property('width', 0.2);
-					cmpValue.should.have.property('height', 0.4);
+					cmpValue.should.have.property('radius', 1);
 				});
 			});
 			describe('.setComponent', function () {
