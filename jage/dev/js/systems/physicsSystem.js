@@ -1,7 +1,7 @@
 define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
- 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle'],
+ 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering'],
  function (System, canvas, Shapes, world, time,
- units, config, Vector2, _, aabb, Rectangle) {
+ units, config, Vector2, _, aabb, Rectangle, rendering) {
 	var physicsSystem = new System({
 		usedComponents: ['rigidbody'],
 		globalSystem: true
@@ -73,42 +73,29 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 			for (var i = 0; i < entities.length; i++) {
 				var entity = entities[i];
 				var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
-				canvas.ctx.save();
-
-				canvas.ctx.fillStyle = "rgba(0, 250, 0, 0.3)";
+				var ctxParams = {
+					fillStyle : "rgba(0, 255, 0, 0.3)"
+				};
 				var drawPos;
 				switch (rigidbody.shape) {
 					case Shapes.CIRCLE:
-						var radius = units.sizeConversion(rigidbody.radius);
-						drawPos = units.worldToScreen ({
-							x : entity.transform.position.x + rigidbody.center.x,
-							y : entity.transform.position.y + rigidbody.center.y
-						});
-						canvas.ctx.translate(drawPos.x, drawPos.y);
-						if (entity.transform.angle !== 0) {
-							canvas.ctx.rotate(entity.transform.angle);
-						}
-						canvas.ctx.beginPath();
-						canvas.ctx.arc(0,
-							0,
-							radius, 0, Math.PI * 2, true);
-						canvas.ctx.closePath();
-						canvas.ctx.fill();
+					rendering.drawCircle ({
+						ctx : ctxParams,
+						angle: 0,
+						radius: rigidbody.radius,
+						center: entity.transform.position
+					});
 					break;
 					case Shapes.BOX:
-						drawPos = units.worldToScreen (entity.transform.position);
-						var transPos = units.pointSizeConversion ({
-							x: rigidbody.box.start.x,
-							y: rigidbody.box.start.y
+						rendering.drawBox ({
+							ctx: ctxParams,
+							angle: 0,
+							center: entity.transform.position,
+							start: rigidbody.box.start,
+							end : rigidbody.box.end
 						});
-						canvas.ctx.translate(drawPos.x, drawPos.y);
-						if (entity.transform.angle !== 0) {
-							canvas.ctx.rotate(entity.transform.angle);
-						}
-						canvas.ctx.fillRect(transPos.x, transPos.y, units.sizeConversion(rigidbody.box.end.x), units.sizeConversion(rigidbody.box.end.y));
 					break;
 				}
-				canvas.ctx.restore();
 			}
 		}
 	};

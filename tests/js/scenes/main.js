@@ -15,16 +15,21 @@ define (['j.Shapes'], function (Shapes) {
 				},
 				"components": {
 					"renderer": {
-						"width": 1.9,
-						"height": 1.9,
+						"shape" : Shapes.CIRCLE,
+						"properties": {
+							"center": {
+								"x" : 0,
+								"y" : 0
+							},
+							"radius" : 1
+						},
 						"color" : "orange"
 					},
 					"rigidbody": {
 						"shape": Shapes.CIRCLE,
 						"mass": 2,
-						"bouncy": 1.1,
+						"bouncy": 0.2,
 						"properties": {
-							"radius" : 1.5,
 							"center": {
 								"x" : 0,
 								"y" : 0
@@ -43,19 +48,31 @@ define (['j.Shapes'], function (Shapes) {
 				},
 				"components": {
 					"renderer": {
-						"width": 0.9,
-						"height": 0.9,
+						"shape": Shapes.BOX,
+						"properties": {
+							"start" : {
+								"x" : -1,
+								"y" : -0.5
+							},
+							"end" : {
+								"x" : 2,
+								"y" : 1
+							}
+						},
 						"color" : "brown"
 					},
 					"rigidbody": {
-						"shape": Shapes.CIRCLE,
+						"shape": Shapes.BOX,
 						"mass": 1,
 						"bouncy": 0.5,
 						"properties": {
-							"radius" : 0.6,
-							"center": {
-								"x" : 0,
-								"y" : 0
+							"start" : {
+								"x" : -1,
+								"y" : -0.5
+							},
+							"end" : {
+								"x" : 2,
+								"y" : 1
 							}
 						}
 					}
@@ -65,20 +82,25 @@ define (['j.Shapes'], function (Shapes) {
 			{
 				"transform": {
 					"position": {
-						"x": 4,
+						"x": 5,
 						"y": 6
 					},
 					"angle": 0.6
 				},
 				"components": {
 					"renderer": {
-						"width": 0.5,
-						"height": 0.5,
-						"color" : "red",
-						"pivot" : {
-							"x" : 0.25,
-							"y" : 0.25
-						}
+						"shape" : Shapes.BOX,
+						"properties" : {
+							"start" : {
+								"x" : -0.25,
+								"y" : -0.25
+							},
+							"end": {
+								"x" : 0.5,
+								"y" : 0.5
+							}
+						},
+						"color" : "red"
 					},
 					"rigidbody": {
 						"shape": Shapes.BOX,
@@ -86,12 +108,53 @@ define (['j.Shapes'], function (Shapes) {
 						"bouncy": 0.8,
 						"properties": {
 							"start" : {
-								"x" : -0.3,
-								"y" : -0.3
+								"x" : -0.25,
+								"y" : -0.25
 							},
 							"end" : {
-								"x" : 0.6,
-								"y" : 0.6
+								"x" : 0.5,
+								"y" : 0.5
+							}
+						}
+					}
+				}
+			},
+
+			{
+				"transform": {
+					"position": {
+						"x": 11,
+						"y": 5
+					},
+					"angle": 0
+				},
+				"components": {
+					"renderer": {
+						"shape" : Shapes.BOX,
+						"properties" : {
+							"start" : {
+								"x" : -0.5,
+								"y" : -1
+							},
+							"end": {
+								"x" : 1,
+								"y" : 2
+							}
+						},
+						"color" : "red"
+					},
+					"rigidbody": {
+						"shape": Shapes.BOX,
+						"mass": 0.5,
+						"bouncy": 0.8,
+						"properties": {
+							"start" : {
+								"x" : -0.5,
+								"y" : -1
+							},
+							"end" : {
+								"x" : 1,
+								"y" : 2
 							}
 						}
 					}

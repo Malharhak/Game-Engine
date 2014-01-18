@@ -31,8 +31,8 @@ requirejs.config ({
 		'j.Rigidbody' : 'components/Rigidbody',
 
 		// Physics shapes
-		'j.CircleCollider' : 'components/shapes/CircleCollider',
-		'j.BoxCollider' : 'components/shapes/BoxCollider',
+		'j.Circle' : 'components/shapes/Circle',
+		'j.Box' : 'components/shapes/Box',
 
 		// Systems
 		'j.renderingSystem' : 'systems/renderingSystem',
@@ -52,6 +52,7 @@ requirejs.config ({
 		'j.time' : 'time',
 		'j.aabb' : 'aabb',
 		'j.units' : 'units',
+		'j.rendering' : 'rendering',
 
 		// External libs
 		'jquery' : '../libs/jquery',

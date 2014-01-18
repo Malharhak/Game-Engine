@@ -1,8 +1,8 @@
-define(["j.Shapes", 'j.CircleCollider', 'j.BoxCollider', 'j.Vector2'],
- function (Shapes, CircleCollider, BoxCollider, Vector2) {
+define(["j.Shapes", 'j.Circle', 'j.Box', 'j.Vector2'],
+ function (Shapes, Circle, Box, Vector2) {
 	var shapes = {};
-	shapes[Shapes.CIRCLE] = CircleCollider;
-	shapes[Shapes.BOX] = BoxCollider;
+	shapes[Shapes.CIRCLE] = Circle;
+	shapes[Shapes.BOX] = Box;
 
 	var Rigidbody = function (params) {
 		this.mass = params.mass || 0;
