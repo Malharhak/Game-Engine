@@ -7,8 +7,10 @@ define (['j.Shapes'], function (Shapes) {
 	content: [
 			{
 				"transform": {
-					"x" : 3,
-					"y" : 3,
+					"position": {
+						"x" : 3,
+						"y" : 3
+					},
 					"angle" : 0.3
 				},
 				"components": {
@@ -19,7 +21,8 @@ define (['j.Shapes'], function (Shapes) {
 					},
 					"rigidbody": {
 						"shape": Shapes.CIRCLE,
-						"mass": 0.5,
+						"mass": 2,
+						"bouncy": 1.1,
 						"properties": {
 							"radius" : 1.5,
 							"center": {
@@ -33,8 +36,10 @@ define (['j.Shapes'], function (Shapes) {
 
 			{
 				"transform": {
-					"x": 8,
-					"y": 4
+					"position": {
+						"x": 8,
+						"y": 4
+					}
 				},
 				"components": {
 					"renderer": {
@@ -44,7 +49,8 @@ define (['j.Shapes'], function (Shapes) {
 					},
 					"rigidbody": {
 						"shape": Shapes.CIRCLE,
-						"mass": 0.2,
+						"mass": 1,
+						"bouncy": 0.5,
 						"properties": {
 							"radius" : 0.6,
 							"center": {
@@ -58,8 +64,10 @@ define (['j.Shapes'], function (Shapes) {
 
 			{
 				"transform": {
-					"x": 4,
-					"y": 6,
+					"position": {
+						"x": 4,
+						"y": 6
+					},
 					"angle": 0.6
 				},
 				"components": {
@@ -74,7 +82,8 @@ define (['j.Shapes'], function (Shapes) {
 					},
 					"rigidbody": {
 						"shape": Shapes.BOX,
-						"mass": 1,
+						"mass": 0.5,
+						"bouncy": 0.8,
 						"properties": {
 							"start" : {
 								"x" : -0.3,

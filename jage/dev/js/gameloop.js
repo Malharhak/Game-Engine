@@ -1,7 +1,7 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
-	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui'
+	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui', 'j.camera'
 	], function (GameStates, sceneManager, requestAnimFrame,
-		initJage, currentScene, time, $, config, dat
+		initJage, currentScene, time, $, config, dat, camera
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
@@ -105,6 +105,7 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		sceneManager: sceneManager,
 		launchScene: launchScene,
 		config: config,
-		time: time
+		time: time,
+		camera: camera
 	};
 });
