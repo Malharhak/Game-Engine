@@ -1,12 +1,17 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
-	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui', 'j.camera'
+	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui', 'j.camera',
+	'j.inputs', 'j.systems'
 	], function (GameStates, sceneManager, requestAnimFrame,
-		initJage, currentScene, time, $, config, dat, camera
+		initJage, currentScene, time, $, config, dat, camera,
+		inputsMan, systems
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
 		if (state === GameStates.RUNNING) {
+			preInputs();
 			inputs();
+			inputsMan.postInputs();
+			postInputs();
 			time.preUpdate();
 			preUpdate();
 			update();
@@ -18,8 +23,14 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		}
 		requestAnimFrame(loop);
 	}
+	function preInputs () {
+		sceneManager.activeScene.launchEV('preInputs');
+	}
 	function inputs() {
 		sceneManager.activeScene.launchEV('inputs');
+	}
+	function postInputs () {
+		sceneManager.activeScene.launchEV ('postInputs');
 	}
 	function preUpdate() {
 		sceneManager.activeScene.launchEV('preUpdate');
@@ -106,6 +117,8 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		launchScene: launchScene,
 		config: config,
 		time: time,
-		camera: camera
+		camera: camera,
+		inputs : inputsMan,
+		systems : systems
 	};
 });

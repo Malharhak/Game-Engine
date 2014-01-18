@@ -1,7 +1,8 @@
 define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
- 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering'],
+ 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering', 'j.physics'],
  function (System, canvas, Shapes, world, time,
- units, config, Vector2, _, aabb, Rectangle, rendering) {
+ units, config, Vector2, _, aabb, Rectangle, rendering,
+ physics) {
 	var physicsSystem = new System({
 		usedComponents: ['rigidbody'],
 		globalSystem: true
@@ -17,7 +18,7 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 			var entity = entities[i];
 			var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
 			rigidbody.nextPosition = new Vector2(entity.transform.position);
-			this.applyForce(rigidbody, new Vector2(0, -world.gravity));
+			physics.applyForce(rigidbody, new Vector2(0, -world.gravity));
 
 			this.computeForces (rigidbody);
 			this.computeCollisions(rigidbody, entity.transform.position);
@@ -63,9 +64,6 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 		}
 	};
 
-	physicsSystem.applyForce = function (rigidbody, force) {
-		rigidbody.forces = rigidbody.forces.add(force);
-	};
 
 	physicsSystem.postRender = function (scene) {
 		if (config.debug) {

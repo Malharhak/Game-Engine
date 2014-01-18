@@ -1,6 +1,7 @@
-define (['j.main', 'chai', 'j.componentTypes', 'scenes/main', 'j.sceneManager'
-	],
-function (j, chai, componentTypes, mainScene, sceneManager) {
+define (['j.main', 'chai', 'j.componentTypes', 'scenes/main', 'j.sceneManager',
+	'systems/inputableSystem'],
+function (j, chai, componentTypes, mainScene, sceneManager,
+	inputableSystem) {
 	var should = chai.should();
 
 	console.log("coucou", jage);
@@ -27,6 +28,12 @@ function (j, chai, componentTypes, mainScene, sceneManager) {
 			it('should have a scene description for main', function () {
 					sceneManager.registerScene('main', mainScene);
 					sceneManager.sceneDescriptions.should.have.property('main');
+			});
+		});
+		describe('registerSystem', function () {
+			it('should register the inputable system', function () {
+				sceneManager.registerSystem('inputableSystem', inputableSystem);
+				jage.systems.should.have.property('inputableSystem');
 			});
 		});
 		describe('.ES', function () {

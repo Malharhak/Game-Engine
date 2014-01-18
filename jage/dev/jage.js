@@ -15,6 +15,7 @@ requirejs.config ({
 		'j.Vector2' : 'Vector2',
 		'j.Rectangle' : 'Rectangle',
 		'j.Point': 'Point',
+		'j.GameKey' : 'GameKey',
 
 		// ES classes
 		'j.ES': 'ES/ES',
@@ -29,6 +30,7 @@ requirejs.config ({
 		// Components
 		'j.Renderer' : 'components/Renderer',
 		'j.Rigidbody' : 'components/Rigidbody',
+		'j.Inputable' : 'components/Inputable',
 
 		// Physics shapes
 		'j.Circle' : 'components/shapes/Circle',
@@ -42,6 +44,10 @@ requirejs.config ({
 		// Enums
 		'j.GameStates': 'GameStates',
 		'j.Shapes' : 'Shapes',
+		'j.KeyboardButtons' : 'KeyboardButtons',
+		'j.GamepadButtons' : 'GamepadButtons',
+		'j.ButtonsMapping' : 'ButtonsMapping',
+
 		// Utils
 		'j.requestAnimFrame': 'requestAnimFrame',
 		'j.initJage': 'initJage',
@@ -53,6 +59,8 @@ requirejs.config ({
 		'j.aabb' : 'aabb',
 		'j.units' : 'units',
 		'j.rendering' : 'rendering',
+		'j.inputs' : 'inputs',
+		'j.physics' : 'physics',
 
 		// External libs
 		'jquery' : '../libs/jquery',
