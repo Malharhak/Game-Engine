@@ -6,7 +6,7 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config'],
 
 	renderingSystem.render = function (scene, entity) {
 		var renderer = scene.getComponentForEntity("renderer", entity._id);
-		var transformSize = units.worldToScreen (entity.transform);
+		var transformSize = units.worldToScreen (entity.transform.position);
 		var pivotSize = units.pointSizeConversion({
 			x: -renderer.pivot.x,
 			y : -renderer.pivot.y
@@ -29,7 +29,7 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config'],
 		}
 		canvas.ctx.fillRect(pivotSize.x, pivotSize.y, rendWidth, rendHeight);
 		if (config.debug) {
-			this.drawGizmo (entity.transform);
+			this.drawGizmo (entity.transform.position);
 		}
 		canvas.ctx.restore();
 	};

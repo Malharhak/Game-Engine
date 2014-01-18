@@ -1,7 +1,6 @@
-define([], function () {
+define(['j.Vector2'], function (Vector2) {
 	var Transform = function (params) {
-		this.x = params.x || 0;
-		this.y = params.y || 0;
+		this.position = new Vector2(params.position);
 		this.angle = params.angle || 0;
 		this.parent = params.parent || 0;
 	};

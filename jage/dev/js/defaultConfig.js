@@ -13,8 +13,14 @@ define([], function () {
 		world: {
 			unitSize: 50,
 			boundaries: {
-				x: 30,
-				y: 5
+				start : {
+					x: 0,
+					y : 0
+				},
+				end: {
+					x: 12,
+					y: 8
+				}
 			}
 		},
 		camera: {
