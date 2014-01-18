@@ -47,6 +47,7 @@ define (['j.Shapes'], function (Shapes) {
 					}
 				},
 				"components": {
+					"inputable" : {},
 					"renderer": {
 						"shape": Shapes.BOX,
 						"properties": {

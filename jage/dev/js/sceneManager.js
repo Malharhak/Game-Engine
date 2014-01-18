@@ -1,5 +1,5 @@
-define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene'],
-	function (_, Scene, currentScene, emptyScene) {
+define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene', 'j.systems'],
+	function (_, Scene, currentScene, emptyScene, systems) {
 	var SceneManager = function () {
 		this.sceneDescriptions = {};
 		this.scenes = {};
@@ -10,6 +10,9 @@ define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene'],
 	};
 	SceneManager.prototype.registerScene = function (name, scene) {
 		this.sceneDescriptions[name] = scene;
+	};
+	SceneManager.prototype.registerSystem = function (name, obj) {
+		systems.registerSystem(name, obj);
 	};
 
 	SceneManager.prototype.changeScene = function (scene, callback) {
