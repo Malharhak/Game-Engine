@@ -1,9 +1,9 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui', 'j.camera',
-	'j.inputs', 'j.systems'
+	'j.inputs', 'j.systems', 'j.pageVisibility'
 	], function (GameStates, sceneManager, requestAnimFrame,
 		initJage, currentScene, time, $, config, dat, camera,
-		inputsMan, systems
+		inputsMan, systems, pageVisibility
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
@@ -76,10 +76,12 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 	function pause () {
 		state = GameStates.PAUSED;
 		time.pause();
+		sceneManager.activeScene.launchEV('pause');
 	}
 	function resume () {
 		state = GameStates.RUNNING;
 		time.resume();
+		sceneManager.activeScene.launchEV('resume');
 	}
 
 	function togglePause () {
@@ -93,6 +95,12 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		if (event.keyCode === 80) {
 			togglePause();
 		}
+	});
+	pageVisibility.onHide(function () {
+		pause();
+	});
+	pageVisibility.onVisible(function () {
+		resume();
 	});
 
 	if (config.debug) {

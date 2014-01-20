@@ -34,5 +34,6 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config', 'j.rendering'
 		}
 	};
 
+
 	return renderingSystem;
 });

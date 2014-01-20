@@ -17,6 +17,9 @@ function (camera, viewport, units, canvas) {
 			canvas.ctx.arc(0, 0, drawRadius, 0, Math.PI * 2, true);
 			canvas.ctx.closePath();
 			canvas.ctx.fill();
+			if (params.stroke) {
+				canvas.ctx.stroke();
+			}
 			if (params.gizmo) {
 				this.drawGizmo ();
 			}
@@ -34,6 +37,9 @@ function (camera, viewport, units, canvas) {
 		canvas.ctx.translate(centerPos.x, centerPos.y);
 		this.rotateCanvas(params.angle);
 		canvas.ctx.fillRect(transPos.x, transPos.y, endPos.x, endPos.y);
+		if (params.stroke) {
+			canvas.ctx.strokeRect(transPos.x, transPos.y, endPos.x, endPos.y);
+		}
 		if (params.gizmo) {
 			this.drawGizmo ();
 		}

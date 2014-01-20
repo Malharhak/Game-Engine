@@ -1,8 +1,17 @@
+// Contains all the functions for managing entities, components and systems
 define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 	function (Entity, componentTypes, systems, _) {
+	/**
+	@class ES
+	*/
 	var ES = function () {
 		this.__l = "";
 	};
+	/** Registers a system in the list
+	* @method registerSystem
+	* @param {String} name The key name for the system
+	* @param {System} obj The system object, which is a system with added functions
+	*/
 	ES.prototype.registerSystem = function (name, obj) {
 		systems.registerSystem(name, obj);
 		for (var i in obj) {
@@ -19,11 +28,24 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		}
 	};
 
+	/**
+	* Adds a component type to the list
+	* @method registerComponent
+	* @param {String} name The name for this component type
+	* @param {Class} The class that this component will instantiate on creation
+	*/
 	ES.prototype.registerComponent = function (name, klass) {
 		componentTypes.registerComponent(name, klass);
 		this.componentData[name] = {};
 		this.componentCounters[name] = 0;
 	};
+	/**
+	* Creates an entity
+	*
+	* @method createEntity
+	* @param {String} label (optional) The label for this object (debug purposes)
+	* @param {String} tag (optional) The tag for this object
+	*/
 	ES.prototype.createEntity = function (params) {
 		if (typeof params !== "object") {
 			params = {};
@@ -33,6 +55,13 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 
 		return this.entitiesCounter++;
 	};
+
+	/** Instantiates a component
+	*
+	* @method createComponent
+	* @param {String} compType The type of component
+	* @param {Object} values The values to set for this component (will be sent to class constructor)
+	*/
 	ES.prototype.createComponent = function (compType, values) {
 		var component = new componentTypes[compType](values);
 		component._id = this.componentCounters[compType];
@@ -41,6 +70,14 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		this.componentData[compType][this.componentCounters[compType]] = component;
 		return this.componentCounters[compType]++;
 	};
+
+	/**
+	 * Adds a component to an entity
+	 * @method  addComponentToEntity
+	 * @param {Number} entityId
+	 * @param {String} componentType
+	 * @param {Number} componentId
+	 */
 	ES.prototype.addComponentToEntity = function (entityId, componentType, componentId) {
 		if (typeof this.entityComponents[entityId] !== "object") {
 			this.entityComponents[entityId] = {};
@@ -50,16 +87,61 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		} else {
 			this.entityComponents[entityId][componentType].push(componentId);
 		}
+		this.componentData[componentType][componentId]._entityId = entityId;
 	};
+
+	/**
+	 * Creates a component and adds it to the entity
+	 * @method  createComponentAndAddTo
+	 * @param  {Number} entityId
+	 * @param  {String} componentType
+	 * @param  {Object} values
+	 * @return {Number}
+	 */
 	ES.prototype.createComponentAndAddTo = function (entityId, componentType, values) {
 		var componentId = this.createComponent(componentType, values);
 		this.addComponentToEntity(entityId, componentType, componentId);
 		return componentId;
 	};
+	/**
+	 * Checks if an entity has a component type
+	 * @method  hasComponent
+	 * @param  {Number}  entityId
+	 * @param  {String}  componentType
+	 * @return {Boolean}
+	 */
+	ES.prototype.hasComponent = function (entityId, componentType) {
+		return typeof this.entityComponents[entityId][componentType] === "object" ? true : false;
+	};
 
+	/**
+	 * Returns the entity for a component
+	 * @method  getEntityForComponent
+	 * @param  {Component} component
+	 * @return {Entity}
+	 */
+	ES.prototype.getEntityForComponent = function (component) {
+		return this.entities[component._entityId];
+	};
+
+	/**
+	 * Returns a component for a type and ID
+	 * @method  getComponentValue
+	 * @param  {String} componentType
+	 * @param  {Number} componentId
+	 * @return {Component}
+	 */
 	ES.prototype.getComponentValue = function (componentType, componentId) {
 		return this.componentData[componentType][componentId];
 	};
+
+	/**
+	 * Returns a component for a given entity
+	 * @method  getComponentForEntity
+	 * @param  {String} componentType
+	 * @param  {Number} entityId
+	 * @return {Component}
+	 */
 	ES.prototype.getComponentForEntity = function (componentType, entityId) {
 		var dataIds = this.entityComponents[entityId][componentType];
 		if (dataIds.length === 1) {
@@ -74,6 +156,22 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		return res;
 	};
 
+	/**
+	 * Returns an entity for an ID
+	 * @method  getEntity
+	 * @param  {Number} entityId
+	 * @return {Entity}
+	 */
+	ES.prototype.getEntity = function (entityId) {
+		return this.entities[entityId];
+	};
+
+	/**
+	 * Returns all the components of an array of types
+	 * @method  findAllComponents
+	 * @param  {[String]} componentTypes
+	 * @return {ComponentData} An object containing all the data for each type
+	 */
 	ES.prototype.findAllComponents = function (componentTypes) {
 		var res = {};
 		for (var i = 0; i < componentTypes.length; i++) {
@@ -90,6 +188,12 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		}
 	};
 
+	/**
+	 * Returns the entities for a components list
+	 * @method  getEntitiesForComponents
+	 * @param  {[String]} components
+	 * @return {[Entity]}
+	 */
 	ES.prototype.getEntitiesForComponents = function (components) {
 		var res = [];
 		for (var i in this.entityComponents) {
@@ -102,6 +206,27 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 			}
 			if (valid) {
 				res.push(this.entities[i]);
+			}
+		}
+		return res;
+	};
+	ES.prototype.getEntitiesWithComponents = function (components) {
+		var res = {};
+		for (var i in this.entityComponents) {
+			var valid = true;
+			for (var c = 0; c < components.length; c++) {
+				if (!this.entityComponents[i].hasOwnProperty(components[c])) {
+					valid = false;
+					break;
+				}
+			}
+			if (valid) {
+				res[i] = {};
+				res[i].entity = this.entities[i];
+				for (var comp = 0; comp < components.length; comp++) {
+					var compType = components[comp];
+					res[i][compType] = this.getComponentForEntity(compType, this.entities[i]._id);
+				}
 			}
 		}
 		return res;

@@ -7,10 +7,10 @@ define([], function () {
 	Time.prototype.preUpdate = function () {
 		this.time = (Date.now() / 1000);
 		this.deltaTime = (this.time - this.lastTime) * this.timeScale;
+		this.lastTime = (Date.now() / 1000);
 	};
 
 	Time.prototype.postUpdate = function () {
-		this.lastTime = (Date.now() / 1000);
 	};
 
 	Time.prototype.start = function () {

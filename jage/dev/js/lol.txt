@@ -1,0 +1,64 @@
+.
+├── camera.js
+├── canvas.js
+├── classes
+│   ├── GameKey.js
+│   ├── Point.js
+│   ├── Rectangle.js
+│   ├── Scene.js
+│   └── Vector2.js
+├── components
+│   ├── Inputable.js
+│   ├── Renderer.js
+│   ├── Rigidbody.js
+│   └── shapes
+│       ├── Box.js
+│       └── Circle.js
+├── config.js
+├── currentScene.js
+├── defaultComponents.js
+├── defaultConfig.js
+├── defaultScene.js
+├── defaultSystems.js
+├── enums
+│   ├── ButtonsMapping.js
+│   ├── GamepadButtons.js
+│   ├── GameStates.js
+│   ├── KeyboardButtons.js
+│   ├── RenderingModes.js
+│   └── Shapes.js
+├── ES
+│   ├── componentTypes.js
+│   ├── Entity.js
+│   ├── ES.js
+│   ├── System.js
+│   ├── systems.js
+│   └── Transform.js
+├── gameloop.js
+├── initJage.js
+├── inputs.js
+├── lol.text
+├── lol.txt
+├── main.js
+├── physics
+│   ├── aabb.js
+│   ├── circlecircle.js
+│   ├── Collision.js
+│   └── physics.js
+├── rendering
+│   └── rendering.js
+├── sceneManager.js
+├── systems
+│   ├── physicsSystem.js
+│   ├── renderingSystem.js
+│   └── screenSystem.js
+├── test.js
+├── time.js
+├── units.js
+├── utils
+│   ├── pageVisibility.js
+│   └── requestAnimFrame.js
+├── viewport.js
+└── world.js
+
+9 directories, 52 files

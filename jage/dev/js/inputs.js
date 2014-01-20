@@ -1,7 +1,8 @@
-define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey'],
- function (ButtonsMapping, canvas, GameKey) {
+define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey', 'j.mouse'],
+ function (ButtonsMapping, canvas, GameKey, mouse) {
 	var Inputs = function () {
 		this.keys = {};
+		this.mouse = mouse;
 	};
 
 	Inputs.prototype.getButton = function (button) {
@@ -28,17 +29,47 @@ define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey'],
 
 	Inputs.prototype.postInputs = function (button) {
 		for (var i in this.keys) {
-			this.keys[i].justPushed = false;
-			this.keys[i].justUp = false;
+			this.keys[i].postInput();
+		}
+		for (var m = 1; m < 4; m++) {
+			mouse.buttons[m].postInput();
 		}
 	};
 
+
+	Inputs.prototype.onDown = function (event) {
+		var button = event.which || event.button;
+		mouse.buttonEvent("down", button);
+		event.stopPropagation();
+		event.cancelBubble = true;
+		event.preventDefault();
+		return false;
+	};
+	Inputs.prototype.onUp = function (event) {
+		var button = event.which || event.button;
+		mouse.buttonEvent("up", button);
+	};
+	Inputs.prototype.onMove = function (position) {
+		mouse.updatePosition(position);
+	};
 	Inputs.prototype.init = function () {
 		for (var i in ButtonsMapping) {
 			this.keys[i] = new GameKey(ButtonsMapping[i]);
 		}
 
 		var self = this;
+		canvas.container.on('mousedown', function (event) {
+			self.onDown (event);
+		});
+		canvas.container.on('contextmenu', function (event) {
+			return false;
+		});
+		canvas.bindMouseMove ('mousemove', function (position) {
+			self.onMove(position);
+		});
+		$(window).on('mouseup', function (event) {
+			self.onUp (event);
+		});
 		$(window).on('keydown', function (event) {
 			var key = event.keyCode || event.which;
 			for (var i in ButtonsMapping) {
