@@ -13,6 +13,10 @@ define ([], function () {
 		return new Vector2(this.x + other.x, this.y + other.y);
 	};
 
+	Vector2.prototype.sub = function (other) {
+		return new Vector2(this.x - other.x, this.y - other.y);
+	};
+
 	Vector2.prototype.scale = function (scalar) {
 		return new Vector2(this.x * scalar, this.y * scalar);
 	};

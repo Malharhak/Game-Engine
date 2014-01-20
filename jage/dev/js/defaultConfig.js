@@ -1,14 +1,15 @@
-define([], function () {
+define(['j.RenderingModes'], function (RenderingModes) {
 	var defaultConfig = {
 		debug: true,
 		screen: {
 			mainContainer: "#gameContainer",
-			renderingMode: 'fixedResolution',
+			renderingMode: RenderingModes.EXTEND,
 			width: 600,
 			height: 400
 		},
 		engine: {
-			debug: true
+			debug: true,
+			editing : false
 		},
 		world: {
 			unitSize: 50,

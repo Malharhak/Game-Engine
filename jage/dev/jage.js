@@ -9,13 +9,19 @@ requirejs.config ({
 		'j.viewport' : 'viewport',
 		'j.camera' : 'camera',
 		'j.config' : 'config',
+		'j.canvas' : 'canvas',
+		'j.world' : 'world',
+		'j.time' : 'time',
+		'j.units' : 'units',
+		'j.inputs' : 'inputs',
+		'j.mouse' : 'mouse',
 
 		// Main classes
-		'j.Scene' : 'Scene',
-		'j.Vector2' : 'Vector2',
-		'j.Rectangle' : 'Rectangle',
-		'j.Point': 'Point',
-		'j.GameKey' : 'GameKey',
+		'j.Scene' : 'classes/Scene',
+		'j.Vector2' : 'classes/Vector2',
+		'j.Rectangle' : 'classes/Rectangle',
+		'j.Point': 'classes/Point',
+		'j.GameKey' : 'classes/GameKey',
 
 		// ES classes
 		'j.ES': 'ES/ES',
@@ -27,6 +33,7 @@ requirejs.config ({
 		'j.defaultComponents' : 'defaultComponents',
 		'j.defaultSystems': 'defaultSystems',
 		'j.currentScene' : 'currentScene',
+
 		// Components
 		'j.Renderer' : 'components/Renderer',
 		'j.Rigidbody' : 'components/Rigidbody',
@@ -40,27 +47,35 @@ requirejs.config ({
 		'j.renderingSystem' : 'systems/renderingSystem',
 		'j.physicsSystem' : 'systems/physicsSystem',
 		'j.screenSystem' : 'systems/screenSystem',
+		'j.mouseSystem' : 'systems/mouseSystem',
 
 		// Enums
-		'j.GameStates': 'GameStates',
-		'j.Shapes' : 'Shapes',
-		'j.KeyboardButtons' : 'KeyboardButtons',
-		'j.GamepadButtons' : 'GamepadButtons',
-		'j.ButtonsMapping' : 'ButtonsMapping',
+		'j.GameStates': 'enums/GameStates',
+		'j.Shapes' : 'enums/Shapes',
+		'j.KeyboardButtons' : 'enums/KeyboardButtons',
+		'j.GamepadButtons' : 'enums/GamepadButtons',
+		'j.ButtonsMapping' : 'enums/ButtonsMapping',
+		'j.RenderingModes' : 'enums/RenderingModes',
+		'j.MouseButtons' : 'enums/MouseButtons',
 
-		// Utils
-		'j.requestAnimFrame': 'requestAnimFrame',
+		// Others
 		'j.initJage': 'initJage',
 		'j.defaultConfig' : 'defaultConfig',
-		'j.canvas' : 'canvas',
-		'j.world' : 'world',
 		'j.emptyScene' : 'defaultScene',
-		'j.time' : 'time',
-		'j.aabb' : 'aabb',
-		'j.units' : 'units',
-		'j.rendering' : 'rendering',
-		'j.inputs' : 'inputs',
-		'j.physics' : 'physics',
+		'j.MouseButton' : 'MouseButton',
+
+		// Utils
+		'j.requestAnimFrame': 'utils/requestAnimFrame',
+		'j.pageVisibility' : 'utils/pageVisibility',
+
+		// Rendering
+		'j.rendering' : 'rendering/rendering',
+
+		// Physics
+		'j.aabb' : 'physics/aabb',
+		'j.circlecircle' : 'physics/circlecircle',
+		'j.physics' : 'physics/physics',
+		'j.Collision' : 'physics/Collision',
 
 		// External libs
 		'jquery' : '../libs/jquery',

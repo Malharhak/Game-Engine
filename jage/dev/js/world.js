@@ -1,4 +1,4 @@
-define (["underscore"], function (_) {
+define (["underscore", 'j.canvas'], function (_, canvas) {
 	var World = function () {
 		this.gravity = 0;
 	};

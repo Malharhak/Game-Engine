@@ -1,8 +1,8 @@
 define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
- 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering', 'j.physics'],
+ 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering', 'j.physics', 'j.Collision'],
  function (System, canvas, Shapes, world, time,
  units, config, Vector2, _, aabb, Rectangle, rendering,
- physics) {
+ physics, Collision) {
 	var physicsSystem = new System({
 		usedComponents: ['rigidbody'],
 		globalSystem: true
@@ -14,56 +14,38 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 
 	physicsSystem.update = function (scene) {
 		var entities = scene.getEntitiesForComponents(["rigidbody"]);
+		var allBodies = scene.getEntitiesWithComponents(["rigidbody"]);
+
+
+		function onEnter (entity, rigidbody, body2) {
+			scene.entityEvent('onCollisionEnter', entity, new Collision(rigidbody, body2));
+		}
+		function onExit (entity, rigidbody, bodyId) {
+			scene.entityEvent('onCollisionExit', entity, new Collision(rigidbody, scene.getComponentValue("rigidbody", bodyId)));
+		}
+
 		for (var i = 0; i < entities.length; i++) {
 			var entity = entities[i];
 			var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
+			if (rigidbody.fixed) {
+				continue;
+			}
+
+			rigidbody.lastPosition = new Vector2(entity.transform.position);
 			rigidbody.nextPosition = new Vector2(entity.transform.position);
-			physics.applyForce(rigidbody, new Vector2(0, -world.gravity));
+			physics.applyForce(rigidbody, new Vector2(0, -world.gravity * rigidbody.mass));
 
-			this.computeForces (rigidbody);
-			this.computeCollisions(rigidbody, entity.transform.position);
+			physics.computeForces (rigidbody);
+			physics.computeVelocity (rigidbody);
+			physics.computePosition(rigidbody);
+			physics.processCollisions (entity, rigidbody, allBodies, onEnter, onExit);
 			entity.transform.position = new Vector2(rigidbody.nextPosition);
+			physics.computeVelocity(rigidbody);
 			rigidbody.forces = new Vector2(0, 0);
+			rigidbody.impulses = new Vector2(0, 0);
+			rigidbody.ignoreCollision = false;
 		}
 	};
-
-	physicsSystem.computeForces = function (rigidbody) {
-		rigidbody.acceleration = rigidbody.forces.scale(1 / rigidbody.mass);
-		rigidbody.velocity = rigidbody.velocity.add(rigidbody.acceleration.scale(time.deltaTime));
-		rigidbody.direction = rigidbody.velocity.normalize();
-		rigidbody.nextPosition = rigidbody.nextPosition.add(rigidbody.velocity.scale(time.deltaTime));
-	};
-
-	physicsSystem.computeCollisions = function (rigidbody, position) {
-		var col = this.checkWorldBoundaries (rigidbody);
-		if (col) {
-			rigidbody.velocity = rigidbody.velocity.scale(-rigidbody.bouncy);
-			rigidbody.nextPosition = new Vector2(position);
-		}
-	};
-
-	physicsSystem.checkWorldBoundaries = function (rigidbody) {
-		switch (rigidbody.shape) {
-			case Shapes.BOX:
-				if (rigidbody.nextPosition.y + rigidbody.box.end.y > world.boundaries.end.y ||
-					rigidbody.nextPosition.y  + rigidbody.box.start.y < world.boundaries.start.y ||
-					rigidbody.nextPosition.x + rigidbody.box.end.x > world.boundaries.end.x ||
-					rigidbody.nextPosition.x + rigidbody.box.start.x < world.boundaries.start.x) {
-					return true;
-				}
-			break;
-			case Shapes.CIRCLE:
-				var circlePoint = rigidbody.nextPosition.add(rigidbody.direction.scale(rigidbody.radius));
-				if (circlePoint.y > world.boundaries.end.y ||
-					circlePoint.y < world.boundaries.start.y ||
-					circlePoint.x > world.boundaries.end.x ||
-					circlePoint.x < world.boundaries.start.x) {
-					return true;
-				}
-			break;
-		}
-	};
-
 
 	physicsSystem.postRender = function (scene) {
 		if (config.debug) {
@@ -72,17 +54,20 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 				var entity = entities[i];
 				var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
 				var ctxParams = {
-					fillStyle : "rgba(0, 255, 0, 0.3)"
+					fillStyle : "rgba(0, 255, 0, 0.3)",
+					strokeStyle : "rgba(0, 255, 0, 0.7)",
+					lineWidth : 2
 				};
 				var drawPos;
 				switch (rigidbody.shape) {
 					case Shapes.CIRCLE:
-					rendering.drawCircle ({
-						ctx : ctxParams,
-						angle: 0,
-						radius: rigidbody.radius,
-						center: entity.transform.position
-					});
+						rendering.drawCircle ({
+							ctx : ctxParams,
+							angle: 0,
+							radius: rigidbody.radius,
+							stroke: true,
+							center: entity.transform.position
+						});
 					break;
 					case Shapes.BOX:
 						rendering.drawBox ({
@@ -90,6 +75,7 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 							angle: 0,
 							center: entity.transform.position,
 							start: rigidbody.box.start,
+							stroke: true,
 							end : rigidbody.box.end
 						});
 					break;
