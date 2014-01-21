@@ -48,6 +48,7 @@ requirejs.config ({
 		'j.physicsSystem' : 'systems/physicsSystem',
 		'j.screenSystem' : 'systems/screenSystem',
 		'j.mouseSystem' : 'systems/mouseSystem',
+		'j.editorSystem' : 'systems/editorSystem',
 
 		// Enums
 		'j.GameStates': 'enums/GameStates',
@@ -67,6 +68,7 @@ requirejs.config ({
 		// Utils
 		'j.requestAnimFrame': 'utils/requestAnimFrame',
 		'j.pageVisibility' : 'utils/pageVisibility',
+		'j.editGui' 	: 'utils/editGui',
 
 		// Rendering
 		'j.rendering' : 'rendering/rendering',

@@ -1,9 +1,9 @@
 define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 	'j.initJage', 'j.currentScene', 'j.time', 'jquery', 'j.config', 'dat.gui', 'j.camera',
-	'j.inputs', 'j.systems', 'j.pageVisibility'
+	'j.inputs', 'j.systems', 'j.pageVisibility', 'j.editGui'
 	], function (GameStates, sceneManager, requestAnimFrame,
 		initJage, currentScene, time, $, config, dat, camera,
-		inputsMan, systems, pageVisibility
+		inputsMan, systems, pageVisibility, editGui
 		) {
 	var state = GameStates.STOPPED;
 	function loop () {
@@ -110,10 +110,12 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 			}
 		};
 
-		var gui = new dat.GUI();
-		gui.add(time, 'timeScale', -2, 2);
-		gui.add(config, 'debug');
-		gui.add(lol, 'pause');
+		editGui.add(time, 'timeScale', -2, 2);
+		editGui.add(config, 'debug');
+		editGui.add(lol, 'pause');
+		if (config.engine.editing) {
+			editGui.add(sceneManager, '_toggleEdit');
+		}
 	}
 
 	return {

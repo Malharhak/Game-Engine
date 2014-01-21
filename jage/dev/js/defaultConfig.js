@@ -9,7 +9,7 @@ define(['j.RenderingModes'], function (RenderingModes) {
 		},
 		engine: {
 			debug: true,
-			editing : false
+			editing : true
 		},
 		world: {
 			unitSize: 50,

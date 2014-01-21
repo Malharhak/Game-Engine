@@ -3,11 +3,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
  'j.camera', 'j.config'],
 	function (ES, _, systems, componentTypes, world, time,
  camera, config) {
-	var runInEditMode = [
-		"preRender",
-		"render",
-		"postRender"
-	];
+
 	var Scene = function (description) {
 		this.description = description;
 		this.name = description.name;
@@ -41,12 +37,13 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 
 	Scene.prototype.load = function (callback) {
 		world.setProperties(this.description.worldProperties);
-		for (var i = 0; i < this.description.content.length; i++) {
+		for (var i in this.description.content) {
 			var entityDesc = this.description.content[i];
 			var entity = this.createEntity({
 				transform : entityDesc.transform,
 				label : entityDesc.label,
-				tag : entityDesc.tag
+				tag : entityDesc.tag,
+				_id : entityDesc._id
 			});
 			for (var c in entityDesc.components) {
 				var compType = c;
@@ -60,6 +57,35 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 		callback();
 	};
 
+	Scene.prototype._export = function () {
+		var sceneDesc = {
+			worldProperties: {
+				gravity : world.gravity
+			},
+			camera : {
+				position : camera.position
+			},
+			content : {}
+		};
+		for (var d in this.entityComponents) {
+			var entity = this.entities[d];
+			sceneDesc.content[d] = {};
+			_.extend(sceneDesc.content[d], entity);
+			sceneDesc.content[d].components = {};
+			var comps = sceneDesc.content[d].components;
+			for (var c in this.entityComponents[d]) {
+				var componentId = this.entityComponents[d][c][0];
+				var component = this.componentData[c][componentId];
+				if (typeof component.getProperties === "function") {
+					comps[c] = component.getProperties();
+				} else {
+					comps[c] = _.extend({}, component);
+				}
+			}
+		}
+		return JSON.stringify(sceneDesc);
+	};
+
 	Scene.prototype.pause = function () {
 
 	};
@@ -68,23 +94,36 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 
 	};
 
+
+	Scene.prototype.checkEditMode = function (ev, system) {
+		if (!config.engine.editing) {
+			return true;
+		}
+		if (typeof system.executeInEditMode !== undefined && system.executeInEditMode !== false) {
+			if (typeof system.executeInEditMode === "boolean") {
+				return true;
+			} else if (typeof system.executeInEditMode === "object") {
+				for (var i = 0; i < system.executeInEditMode.length; i++) {
+					if (system.executeInEditMode[i] === ev) {
+						return true;
+					}
+				}
+				return false;
+			}
+		} else {
+			return false;
+		}
+	};
 	// Launches an event function, IE inputs, preUpdate, render...
 	Scene.prototype.launchEV = function (ev) {
-		var works = false;
-		if (config.engine.editing) {
-			for (var r = 0; r < runInEditMode.length; r++) {
-				if (runInEditMode[r] === ev) {
-					works = true;
-				}
-			}
-			if (!works) {
-				return;
-			}
-		}
+
 		if (typeof this.functionsUsed[ev] === "object") {
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
 				var system = systems[systemName];
+				if (!this.checkEditMode(ev, system)) {
+					return;
+				}
 				if (system.globalSystem || system.masterSystem) {
 					system[ev](this);
 				} else {
@@ -99,21 +138,13 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 	};
 
 	Scene.prototype.entityEvent = function (ev, entity, params) {
-		var works = false;
-		if (config.engine.editing) {
-			for (var r = 0; r < runInEditMode.length; r++) {
-				if (runInEditMode[r] === ev) {
-					works = true;
-				}
-			}
-			if (!works) {
-				return;
-			}
-		}
 		if (typeof this.functionsUsed[ev] === "object") {
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
 				var system = systems[systemName];
+				if (!this.checkEditMode(ev, system)) {
+					return;
+				}
 				var valid = true;
 				for (var c = 0; c < system.usedComponents; c++) {
 					if (!this.hasComponent(entity._id, system.usedComponents[c])) {

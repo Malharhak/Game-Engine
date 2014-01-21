@@ -5,7 +5,8 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
  physics, Collision) {
 	var physicsSystem = new System({
 		usedComponents: ['rigidbody'],
-		globalSystem: true
+		globalSystem: true,
+		executeInEditMode : ["postRender"]
 	});
 
 	physicsSystem.start = function (scene) {

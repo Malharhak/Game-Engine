@@ -50,8 +50,14 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		if (typeof params !== "object") {
 			params = {};
 		}
-		params.id = this.entitiesCounter;
-		this.entities[this.entitiesCounter] = new Entity(params);
+		if (typeof params._id === "number") {
+			if (params._id > this.entitiesCounter) {
+				this.entitiesCounter = params._id;
+			}
+		} else {
+			params._id = this.entitiesCounter;
+		}
+		this.entities[params._id] = new Entity(params);
 
 		return this.entitiesCounter++;
 	};
@@ -64,7 +70,17 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 	*/
 	ES.prototype.createComponent = function (compType, values) {
 		var component = new componentTypes[compType](values);
-		component._id = this.componentCounters[compType];
+		if (typeof values !== "object") {
+			values = {};
+		}
+		if (typeof values._id === "number") {
+			component._id = values._id;
+			if (values._id > this.componentCounters[compType]) {
+				this.componentCounters[compType] = values._id;
+			}
+		} else {
+			component._id = this.componentCounters[compType];
+		}
 		component._type = compType;
 		_.extend(component, values);
 		this.componentData[compType][this.componentCounters[compType]] = component;

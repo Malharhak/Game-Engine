@@ -30,20 +30,20 @@ function (System, inputs, Buttons, physics,
 		if (entity.tag === "box") {
 			var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
 			physics.applyImpulse(rigidbody, new Vector2(0, 4));
-			console.log("down on ", entity.label);
+			//console.log("down on ", entity.label);
 		}
 	};
 	inputableSystem.onCollisionEnter = function (scene, entity, collision) {
 		var otherEntity = scene.getEntityForComponent(collision.collided);
 		if (otherEntity.tag === "box") {
 			collision.rigidbody.ignoreCollision = true;
-			console.log("Collision : ", entity.label, otherEntity.label);
+			//console.log("Collision : ", entity.label, otherEntity.label);
 		}
 	};
 	inputableSystem.onCollisionExit = function (scene, entity, collision) {
 		var otherEntity = scene.getEntityForComponent(collision.collided);
 		if (otherEntity.tag === "box") {
-			console.log("Collision out : ", entity.label, otherEntity.label);
+			//console.log("Collision out : ", entity.label, otherEntity.label);
 		}
 	};
 	return inputableSystem;

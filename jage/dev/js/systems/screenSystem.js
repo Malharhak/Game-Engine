@@ -1,7 +1,8 @@
 define (['j.System', 'j.canvas', 'j.camera', 'j.world', 'j.config'],
  function (System, canvas, camera, world, config) {
 	var screenSystem = new System({
-		masterSystem: true
+		masterSystem: true,
+		executeInEditMode : true
 	});
 
 	screenSystem.preRender = function (scene) {

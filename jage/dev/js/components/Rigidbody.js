@@ -23,5 +23,21 @@ define(["j.Shapes", 'j.Circle', 'j.Box', 'j.Vector2'],
 		_.extend(this, new shapes[this.shape](params.properties));
 	};
 
+	Rigidbody.prototype.getProperties = function () {
+		return {
+			shape : this.shape,
+			mass : this.mass,
+			airFriction: this.airFriction,
+			friction : this.friction,
+			bouncy : this.bouncy,
+			fixed : this.fixed,
+			properties : {
+				center : this.center,
+				radius : this.radius,
+				box : this.box
+			}
+		};
+	};
+
 	return Rigidbody;
 });

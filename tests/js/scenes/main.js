@@ -10,9 +10,10 @@ define (['j.Shapes'], function (Shapes) {
 			"y" : 4
 		}
 	},
-	content: [
-			{
+	content: {
+			"10" : {
 				"label" : "bigcircle",
+				"_id" : 10,
 				"transform": {
 					"position": {
 						"x" : 3,
@@ -46,7 +47,7 @@ define (['j.Shapes'], function (Shapes) {
 				}
 			},
 
-			{
+			"11" : {
 				"label" : "minicircle",
 				"transform": {
 					"position": {
@@ -82,48 +83,7 @@ define (['j.Shapes'], function (Shapes) {
 				}
 			},
 
-			{
-				"label" : "player",
-				"transform": {
-					"position": {
-						"x": 8,
-						"y": 5
-					}
-				},
-				"components": {
-					"inputable" : {},
-					"renderer": {
-						"shape": Shapes.BOX,
-						"properties": {
-							"start" : {
-								"x" : -1,
-								"y" : -1
-							},
-							"end" : {
-								"x" : 2,
-								"y" : 2
-							}
-						},
-						"color" : "brown"
-					},
-					"rigidbody": {
-						"shape": Shapes.BOX,
-						"mass": 3,
-						"properties": {
-							"start" : {
-								"x" : -1,
-								"y" : -1
-							},
-							"end" : {
-								"x" : 2,
-								"y" : 2
-							}
-						}
-					}
-				}
-		},
-
-			{
+			"12" : {
 				"label" : "minibox",
 				"tag": "box",
 				"transform": {
@@ -165,8 +125,48 @@ define (['j.Shapes'], function (Shapes) {
 					}
 				}
 			},
+			"13" : {
+				"label" : "player",
+				"transform": {
+					"position": {
+						"x": 8,
+						"y": 5
+					}
+				},
+				"components": {
+					"inputable" : {},
+					"renderer": {
+						"shape": Shapes.BOX,
+						"properties": {
+							"start" : {
+								"x" : -1,
+								"y" : -1
+							},
+							"end" : {
+								"x" : 2,
+								"y" : 2
+							}
+						},
+						"color" : "brown"
+					},
+					"rigidbody": {
+						"shape": Shapes.BOX,
+						"mass": 3,
+						"properties": {
+							"start" : {
+								"x" : -1,
+								"y" : -1
+							},
+							"end" : {
+								"x" : 2,
+								"y" : 2
+							}
+						}
+					}
+				}
+			},
 
-			{
+			"14" : {
 				"label" : "bigbox",
 				"transform": {
 					"position": {
@@ -208,7 +208,7 @@ define (['j.Shapes'], function (Shapes) {
 					}
 				}
 			},
-			{
+			"15" : {
 				"label" : "floor",
 				"transform": {
 					"position": {
@@ -250,7 +250,6 @@ define (['j.Shapes'], function (Shapes) {
 					}
 				}
 			},
-
-		]
+		}
 	};
 });

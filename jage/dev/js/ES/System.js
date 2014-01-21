@@ -5,6 +5,7 @@ define ([], function () {
 		this.masterSystem = params.masterSystem || false;
 		this.usedComponents = params.usedComponents || [];
 		this.globalSystem = params.globalSystem || false; // If global system, will receive all components at once
+		this.executeInEditMode = params.executeInEditMode || false;
 	};
 
 	return System;

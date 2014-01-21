@@ -3,7 +3,8 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config', 'j.rendering'
  function (System, canvas, camera, units, config, rendering,
  Shapes) {
 	var renderingSystem = new System({
-		usedComponents: ["renderer"]
+		usedComponents: ["renderer"],
+		executeInEditMode : true
 	});
 
 	renderingSystem.render = function (scene, entity) {

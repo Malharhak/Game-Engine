@@ -9,7 +9,7 @@ define (['j.Transform'], function (Transform) {
 	var Entity = function (params) {
 		this.label = params.label || "";
 		this.tag = params.tag || "";
-		this._id = params.id;
+		this._id = params._id;
 		this.transform = new Transform(params.transform || {});
 	};
 	Entity.prototype.getComponent = function (scene, componentType) {

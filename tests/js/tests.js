@@ -1,6 +1,6 @@
-define (['j.main', 'chai', 'j.componentTypes', 'scenes/main', 'j.sceneManager',
+define (['j.main', 'chai', 'j.componentTypes', '../scenes/editedScene', 'scenes/main', 'j.sceneManager',
 	'systems/inputableSystem'],
-function (j, chai, componentTypes, mainScene, sceneManager,
+function (j, chai, componentTypes, edited, mainScene, sceneManager,
 	inputableSystem) {
 	var should = chai.should();
 
@@ -26,7 +26,8 @@ function (j, chai, componentTypes, mainScene, sceneManager,
 		});
 		describe('registerScenes', function () {
 			it('should have a scene description for main', function () {
-					sceneManager.registerScene('main', mainScene);
+					sceneManager.registerScene('main', JSON.parse(edited));
+					// sceneManager.registerScene('main', mainScene);
 					sceneManager.sceneDescriptions.should.have.property('main');
 			});
 		});
@@ -45,7 +46,7 @@ function (j, chai, componentTypes, mainScene, sceneManager,
 			var ent;
 			describe('.createEnttiy', function () {
 				it ('should create an entity', function () {
-					ent = sceneManager.activeScene.createEntity("lol");
+					ent = sceneManager.activeScene.createEntity({label : "lol"});
 					(typeof ent).should.equal('number');
 					console.log("Created entity: ", ent);
 				});
@@ -68,12 +69,10 @@ function (j, chai, componentTypes, mainScene, sceneManager,
 			});
 			describe('.setComponent', function () {
 				it ('should set renderer to width 10 height 30', function () {
-					cmpValue.width = 0.1;
-					cmpValue.height = 0.3;
+					cmpValue.radius = 2;
 					//sceneManager.activeScene.setComponent(cmpValue);
 					var nValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					nValue.should.have.property('width', 0.1);
-					nValue.should.have.property('height', 0.3);
+					nValue.should.have.property('radius', 2);
 				});
 			});
 			var entities = [];
@@ -88,9 +87,10 @@ function (j, chai, componentTypes, mainScene, sceneManager,
 			var rend;
 			describe('.getComponentForEntity', function () {
 				it('should find the renderer for the first entity', function () {
+					console.log(entities, sceneManager.activeScene.entityComponents);
 					rend = sceneManager.activeScene.getComponentForEntity("renderer", entities[0]._id);
 					(typeof rend).should.equal("object");
-					rend.should.have.property("width", 0.1);
+					rend.should.have.property("radius", 2);
 				});
 			});
 		});
