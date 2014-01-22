@@ -2,6 +2,7 @@ define(['dat.gui', 'j.propertiesGui', 'jquery'], function (dat, propertiesGui, $
 
 	var gui = new dat.GUI();
 	gui.addFolder('config');
+	gui.addFolder('tools');
 
 	function removeFolder (gui, name) {
 		$(gui.__folders[name].__ul).remove();
@@ -12,6 +13,7 @@ define(['dat.gui', 'j.propertiesGui', 'jquery'], function (dat, propertiesGui, $
 		main : gui,
 		config : gui.__folders.config,
 		propertiesGui : propertiesGui,
+		tools : gui.__folders.tools,
 		removeFolder : removeFolder
 	};
 

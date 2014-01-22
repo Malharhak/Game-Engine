@@ -39,6 +39,24 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		this.componentData[name] = {};
 		this.componentCounters[name] = 0;
 	};
+
+	ES.prototype.removeComponent = function (entityId, componentType) {
+		if (typeof this.entityComponents[entityId][componentType] === "object") {
+			var compId = this.entityComponents[entityId][componentType][0];
+			delete this.entityComponents[entityId][componentType];
+			delete this.componentData[componentType][compId];
+		}
+	};
+	ES.prototype.removeEntity = function (entityId) {
+		if (typeof this.entityComponents[entityId] === "object") {
+			for (var i in this.entityComponents[entityId]) {
+				this.removeComponent(entityId, i);
+			}
+		}
+		if (typeof this.entities[entityId] === "object") {
+			delete this.entities[entityId];
+		}
+	};
 	/**
 	* Creates an entity
 	*
@@ -60,6 +78,11 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		this.entities[params._id] = new Entity(params);
 
 		return this.entitiesCounter++;
+	};
+	ES.prototype.createDefaultEntity = function (params) {
+		var entityId = this.createEntity(params);
+		this.createComponentAndAddTo(entityId, "renderer", {});
+		this.createComponentAndAddTo(entityId, "rigidbody", {});
 	};
 
 	/** Instantiates a component

@@ -115,6 +115,13 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 				});
 			}
 		};
+		var toolsFuncs = {
+			createEntity : function () {
+				sceneManager.activeScene.createDefaultEntity({transform :{
+					position : camera.position
+				}});
+			}
+		};
 
 		editGui.config.add(time, 'timeScale', -2, 2);
 		editGui.config.add(config, 'debug');
@@ -122,6 +129,7 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		if (config.engine.editing) {
 			editGui.config.add(lol, 'toggleEdit');
 		}
+		editGui.tools.add(toolsFuncs, 'createEntity');
 	}
 
 	return {
