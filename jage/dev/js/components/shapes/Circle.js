@@ -7,5 +7,11 @@ define(['j.Vector2'], function (Vector2) {
 		this.center = new Vector2(properties.center);
 	};
 
+	Circle.prototype.getProperties = function (gui) {
+		var center = gui.addFolder('center');
+		this.center.getProperties(center);
+		gui.add(this, 'radius');
+	};
+
 	return Circle;
 });

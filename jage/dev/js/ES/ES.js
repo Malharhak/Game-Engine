@@ -82,7 +82,6 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 			component._id = this.componentCounters[compType];
 		}
 		component._type = compType;
-		_.extend(component, values);
 		this.componentData[compType][this.componentCounters[compType]] = component;
 		return this.componentCounters[compType]++;
 	};
@@ -226,6 +225,15 @@ define (['j.Entity', 'j.componentTypes', 'j.systems', "underscore"],
 		}
 		return res;
 	};
+	ES.prototype.getEntityWithComponents = function (entityId) {
+		var res = {};
+		res.entity  = this.entities[entityId];
+		for (var i in this.entityComponents[entityId]) {
+			res[i] = this.componentData[i][this.entityComponents[entityId][i][0]];
+		}
+		return res;
+	};
+
 	ES.prototype.getEntitiesWithComponents = function (components) {
 		var res = {};
 		for (var i in this.entityComponents) {

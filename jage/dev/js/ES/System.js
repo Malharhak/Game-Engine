@@ -6,6 +6,7 @@ define ([], function () {
 		this.usedComponents = params.usedComponents || [];
 		this.globalSystem = params.globalSystem || false; // If global system, will receive all components at once
 		this.executeInEditMode = params.executeInEditMode || false;
+		this.onlyEditMode = params.onlyEditMode || false;
 	};
 
 	return System;

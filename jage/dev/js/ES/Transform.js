@@ -5,5 +5,12 @@ define(['j.Vector2'], function (Vector2) {
 		this.parent = params.parent || -1;
 	};
 
+	Transform.prototype.getProperties = function (gui) {
+		//this.position.getProperties(pos);
+		var self = this;
+		gui.add(self, 'angle');
+		gui.add(self, 'parent');
+	};
+
 	return Transform;
 });

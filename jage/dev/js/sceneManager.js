@@ -11,6 +11,7 @@ define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene', 'j.systems',
 		_.extend(this.sceneDescriptions, scenes);
 	};
 	SceneManager.prototype.registerScene = function (name, scene) {
+		delete this.sceneDescriptions[name];
 		this.sceneDescriptions[name] = scene;
 	};
 	SceneManager.prototype.registerSystem = function (name, obj) {
@@ -21,33 +22,34 @@ define (['underscore', 'j.Scene', 'j.currentScene', 'j.emptyScene', 'j.systems',
 		this.loadScene(scene, callback);
 	};
 
-	SceneManager.prototype._toggleEdit = function () {
+	SceneManager.prototype._toggleEdit = function (callback) {
 		if (config.engine.editing) {
-			this._playMode();
+			this._playMode(callback);
 		} else {
-			this._editMode();
+			this._editMode(callback);
 		}
 	};
 
-	SceneManager.prototype._playMode = function ()  {
+	SceneManager.prototype._playMode = function (callback)  {
 		config.engine.editing = false;
-		this.editingDescription = JSON.parse(this.activeScene._export());
+		this.editingDescription = _.extend(this.activeScene.description, JSON.parse(this.activeScene._export()));
 		var  self = this;
 		this.changeScene('empty', function () {
 			self.registerScene(self.editingDescription.name, self.editingDescription);
-			self.changeScene(self.editingDescription.name, function () {});
+			self.changeScene(self.editingDescription.name, callback);
 		});
 	};
 
-	SceneManager.prototype._editMode = function () {
+	SceneManager.prototype._editMode = function (callback) {
 		config.engine.editing = true;
 		var self = this;
 		this.changeScene('empty', function () {
 			self.registerScene(self.editingDescription.name, self.editingDescription);
-			self.changeScene (self.editingDescription.name, function () {});
+			self.changeScene (self.editingDescription.name, callback);
 		});
 	};
 	SceneManager.prototype.loadScene = function (scene, callback) {
+		delete this.scenes[scene];
 		this.scenes[scene] = new Scene (this.sceneDescriptions[scene]);
 		this.lastScene = this.activeScene;
 		var self = this;

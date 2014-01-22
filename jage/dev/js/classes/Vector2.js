@@ -30,5 +30,10 @@ define ([], function () {
 		return new Vector2(this.x / ln, this.y / ln);
 	};
 
+	Vector2.prototype.getProperties = function (gui) {
+		var self = this;
+		gui.add(self, 'x');
+		gui.add(self, 'y');
+	};
 	return Vector2;
 });

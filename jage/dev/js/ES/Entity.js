@@ -16,5 +16,15 @@ define (['j.Transform'], function (Transform) {
 		return scene.getComponentValue(componentType, this._id);
 	};
 
+	Entity.prototype.getProperties = function (gui) {
+		console.log(gui);
+		var ent = gui.addFolder('entity');
+		console.log(ent);
+		var self = this;
+		ent.add(self, 'label');
+		ent.add(self, 'tag');
+		var tr = ent.addFolder('transform');
+		this.transform.getProperties(tr);
+	};
 	return Entity;
 });

@@ -64,15 +64,15 @@ function (j, chai, componentTypes, edited, mainScene, sceneManager,
 			describe (".getComponentValue", function () {
 				it('should get a renderer with width 20 and height 40', function () {
 					cmpValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					cmpValue.should.have.property('radius', 1);
+					cmpValue.properties.should.have.property('radius', 1);
 				});
 			});
 			describe('.setComponent', function () {
 				it ('should set renderer to width 10 height 30', function () {
-					cmpValue.radius = 2;
+					cmpValue.properties.radius = 2;
 					//sceneManager.activeScene.setComponent(cmpValue);
 					var nValue = sceneManager.activeScene.getComponentValue("renderer", cmp);
-					nValue.should.have.property('radius', 2);
+					nValue.properties.should.have.property('radius', 2);
 				});
 			});
 			var entities = [];
@@ -87,10 +87,9 @@ function (j, chai, componentTypes, edited, mainScene, sceneManager,
 			var rend;
 			describe('.getComponentForEntity', function () {
 				it('should find the renderer for the first entity', function () {
-					console.log(entities, sceneManager.activeScene.entityComponents);
 					rend = sceneManager.activeScene.getComponentForEntity("renderer", entities[0]._id);
 					(typeof rend).should.equal("object");
-					rend.should.have.property("radius", 2);
+					rend.properties.should.have.property("radius", 2);
 				});
 			});
 		});

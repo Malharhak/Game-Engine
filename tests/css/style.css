@@ -6,3 +6,8 @@
 		height: 400px;
 		margin: auto;
 	}
+	.j-properties-editor {
+		position : fixed;
+		top : 0px;
+		right : 250px;
+	}

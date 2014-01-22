@@ -190,7 +190,7 @@ define (['j.Shapes'], function (Shapes) {
 						},
 						"color" : "red"
 					},
-					"rigidbody": {
+/*					"rigidbody": {
 						"shape": Shapes.BOX,
 						"mass": 2,
 						"fixed" : false,
@@ -205,7 +205,7 @@ define (['j.Shapes'], function (Shapes) {
 								"y" : 2
 							}
 						}
-					}
+					}*/
 				}
 			},
 			"15" : {

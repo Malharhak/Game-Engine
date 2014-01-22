@@ -48,7 +48,7 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 			for (var c in entityDesc.components) {
 				var compType = c;
 				var values = entityDesc.components[c];
-				this.createComponentAndAddTo(entity, compType, values);
+				var cmp = this.createComponentAndAddTo(entity, compType, values);
 			}
 		}
 		time.start();
@@ -76,8 +76,8 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 			for (var c in this.entityComponents[d]) {
 				var componentId = this.entityComponents[d][c][0];
 				var component = this.componentData[c][componentId];
-				if (typeof component.getProperties === "function") {
-					comps[c] = component.getProperties();
+				if (typeof component.export === "function") {
+					comps[c] = component.export();
 				} else {
 					comps[c] = _.extend({}, component);
 				}
@@ -114,6 +114,22 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 			return false;
 		}
 	};
+	Scene.prototype.checkOnlyEditMode = function (ev, system) {
+		if (typeof system.onlyEditMode === undefined || system.onlyEditMode === false) {
+			return true;
+
+		} else {
+			if (typeof system.onlyEditMode === "object") {
+				for (var i = 0; i < system.onlyEditMode.length; i++) {
+					if (system.onlyEditMode[i] === ev) {
+						return config.engine.editing;
+					}
+				}
+			} else {
+				return config.engine.editing;
+			}
+		}
+	};
 	// Launches an event function, IE inputs, preUpdate, render...
 	Scene.prototype.launchEV = function (ev) {
 
@@ -121,8 +137,8 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
 				var system = systems[systemName];
-				if (!this.checkEditMode(ev, system)) {
-					return;
+				if (!this.checkEditMode(ev, system) || !this.checkOnlyEditMode(ev, system)) {
+					continue;
 				}
 				if (system.globalSystem || system.masterSystem) {
 					system[ev](this);
@@ -137,23 +153,28 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 
 	};
 
+
 	Scene.prototype.entityEvent = function (ev, entity, params) {
 		if (typeof this.functionsUsed[ev] === "object") {
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
 				var system = systems[systemName];
-				if (!this.checkEditMode(ev, system)) {
-					return;
+				if (!this.checkEditMode(ev, system) || !this.checkOnlyEditMode(ev, system)) {
+					continue;
 				}
-				var valid = true;
-				for (var c = 0; c < system.usedComponents; c++) {
-					if (!this.hasComponent(entity._id, system.usedComponents[c])) {
-						valid = false;
-						break;
+				if (entity !== false) {
+					var valid = true;
+					for (var c = 0; c < system.usedComponents; c++) {
+						if (!this.hasComponent(entity._id, system.usedComponents[c])) {
+							valid = false;
+							break;
+						}
 					}
-				}
-				if (valid) {
-					system[ev](this, entity, params);
+					if (valid) {
+						system[ev](this, entity, params);
+					}
+				} else {
+					system[ev](this, false);
 				}
 			}
 		}

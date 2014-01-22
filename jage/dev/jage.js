@@ -58,6 +58,18 @@ requirejs.config ({
 		'j.ButtonsMapping' : 'enums/ButtonsMapping',
 		'j.RenderingModes' : 'enums/RenderingModes',
 		'j.MouseButtons' : 'enums/MouseButtons',
+		'j.CompProperties' : 'enums/CompProperties',
+
+		// Editor
+		'j.propertiesGui' : 'editor/propertiesGui',
+		'j.PropertiesGui' : 'editor/PropertiesGui',
+
+/*		'j.InspectorFolder' : 'editor/InspectorFolder',
+		'j.InspectorElement' : 'editor/InspectorElement',
+		'j.EditorColor' : 'editor/editorColor',
+		'j.EditorSelect' : 'editor/editorSelect',
+		'j.EditorNumber' : 'editor/EditorNumber',
+		'j.EditorBoolean' : 'editor/EditorBoolean',*/
 
 		// Others
 		'j.initJage': 'initJage',

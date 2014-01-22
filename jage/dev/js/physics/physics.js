@@ -101,15 +101,15 @@ define(['j.aabb', 'j.circlecircle', 'j.Shapes', 'j.Rectangle', 'j.Circle', 'j.ti
 	Physics.prototype.checkWorldBoundaries = function (rigidbody) {
 		switch (rigidbody.shape) {
 			case Shapes.BOX:
-				if (rigidbody.nextPosition.y + rigidbody.box.end.y > world.boundaries.end.y ||
-					rigidbody.nextPosition.y  + rigidbody.box.start.y < world.boundaries.start.y ||
-					rigidbody.nextPosition.x + rigidbody.box.end.x > world.boundaries.end.x ||
-					rigidbody.nextPosition.x + rigidbody.box.start.x < world.boundaries.start.x) {
+				if (rigidbody.nextPosition.y + rigidbody.properties.end.y > world.boundaries.end.y ||
+					rigidbody.nextPosition.y  + rigidbody.properties.start.y < world.boundaries.start.y ||
+					rigidbody.nextPosition.x + rigidbody.properties.end.x > world.boundaries.end.x ||
+					rigidbody.nextPosition.x + rigidbody.properties.start.x < world.boundaries.start.x) {
 					return true;
 				}
 			break;
 			case Shapes.CIRCLE:
-				var circlePoint = rigidbody.nextPosition.add(rigidbody.direction.scale(rigidbody.radius));
+				var circlePoint = rigidbody.nextPosition.add(rigidbody.direction.scale(rigidbody.properties.radius));
 				if (circlePoint.y > world.boundaries.end.y ||
 					circlePoint.y < world.boundaries.start.y ||
 					circlePoint.x > world.boundaries.end.x ||
@@ -147,12 +147,12 @@ define(['j.aabb', 'j.circlecircle', 'j.Shapes', 'j.Rectangle', 'j.Circle', 'j.ti
 
 	Physics.prototype.circleCircle = function (body1, body2, position, pos2) {
 		var circle1 = new Circle ({
-			center: body1.center.add(position),
-			radius: body1.radius
+			center: body1.properties.center.add(position),
+			radius: body1.properties.radius
 		});
 		var circle2 = new Circle ({
-			center: body2.center.add(pos2),
-			radius : body2.radius
+			center: body2.properties.center.add(pos2),
+			radius : body2.properties.radius
 		});
 		if (circleCircle(circle1, circle2)) {
 			return true;
@@ -163,12 +163,12 @@ define(['j.aabb', 'j.circlecircle', 'j.Shapes', 'j.Rectangle', 'j.Circle', 'j.ti
 
 	Physics.prototype.boxBox = function (body1, body2, position, pos2) {
 		var box1 = new Rectangle({
-			start : body1.box.start.add(position),
-			end : body1.box.end
+			start : body1.properties.start.add(position),
+			end : body1.properties.end
 		});
 		var box2 = new Rectangle({
-			start : body2.box.start.add(pos2),
-			end : body2.box.end
+			start : body2.properties.start.add(pos2),
+			end : body2.properties.end
 		});
 		if (aabb(box1, box2)) {
 				return true;
@@ -194,12 +194,12 @@ define(['j.aabb', 'j.circlecircle', 'j.Shapes', 'j.Rectangle', 'j.Circle', 'j.ti
 			circlePosition = position;
 		}
 		var box1 = new Rectangle({
-			start : boxBody.box.start.add(boxPosition),
-			end : boxBody.box.end
+			start : boxBody.properties.start.add(boxPosition),
+			end : boxBody.properties.end
 		});
 		var box2 = new Rectangle ({
-			start : circleBody.center.add(circlePosition).add(new Vector2(-circleBody.radius, -circleBody.radius)),
-			end : new Vector2(circleBody.radius * 2, circleBody.radius * 2)
+			start : circleBody.properties.center.add(circlePosition).add(new Vector2(-circleBody.properties.radius, -circleBody.properties.radius)),
+			end : new Vector2(circleBody.properties.radius * 2, circleBody.properties.radius * 2)
 		});
 		if (aabb(box1, box2)) {
 				return true;

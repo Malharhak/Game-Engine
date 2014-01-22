@@ -4,7 +4,8 @@ define (['j.System', 'j.MouseButtons', 'j.physics', 'j.Shapes', 'j.Circle', 'j.V
  Rectangle, mouse) {
 	var mouseSystem = new System({
 		usedComponents : ['renderer'],
-		masterSystem : true
+		masterSystem : true,
+		executeInEditMode : true
 	});
 
 	mouseSystem.inputs = function (scene) {
@@ -27,6 +28,7 @@ define (['j.System', 'j.MouseButtons', 'j.physics', 'j.Shapes', 'j.Circle', 'j.V
 	mouseSystem.action = function (scene, button, evt) {
 		var position = mouse.worldPosition;
 		var entities = scene.getEntitiesForComponents(["renderer"]);
+		var hasCollided = false;
 		for (var i = 0; i < entities.length; i++) {
 			var entity = entities[i];
 			var renderer = scene.getComponentForEntity("renderer", entity._id);
@@ -35,19 +37,23 @@ define (['j.System', 'j.MouseButtons', 'j.physics', 'j.Shapes', 'j.Circle', 'j.V
 				case Shapes.CIRCLE:
 					collided = physics.pointCircle(position, new Circle({
 						radius : renderer.radius,
-						center : new Vector2(entity.transform.position.add(renderer.center))
+						center : new Vector2(entity.transform.position.add(renderer.properties.center))
 					}));
 				break;
 				case Shapes.BOX:
 					collided = physics.pointBox (position, new Rectangle({
-						start : entity.transform.position.add(renderer.box.start),
-						end : renderer.box.end
+						start : entity.transform.position.add(renderer.properties.start),
+						end : renderer.properties.end
 					}));
 				break;
 			}
 			if (collided) {
+				hasCollided = true;
 				scene.entityEvent (evt, entity);
 			}
+		}
+		if (!hasCollided) {
+			scene.entityEvent(evt, false);
 		}
 	};
 	return mouseSystem;

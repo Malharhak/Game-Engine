@@ -19,16 +19,16 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config', 'j.rendering'
 		switch (renderer.shape) {
 			case Shapes.CIRCLE:
 				_.extend(renderingParams, {
-					center: entity.transform.position.add(renderer.pivot).add(renderer.center),
-					radius: renderer.radius
+					center: entity.transform.position.add(renderer.pivot).add(renderer.properties.center),
+					radius: renderer.properties.radius
 				});
 				rendering.drawCircle(renderingParams);
 			break;
 			case Shapes.BOX:
 				_.extend(renderingParams, {
 					center: entity.transform.position.add(renderer.pivot),
-					start : renderer.box.start,
-					end : renderer.box.end
+					start : renderer.properties.start,
+					end : renderer.properties.end
 				});
 				rendering.drawBox (renderingParams);
 			break;

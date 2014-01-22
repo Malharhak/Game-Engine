@@ -107,14 +107,20 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		var lol = {
 			pause : function () {
 				togglePause();
+			},
+			toggleEdit : function () {
+				state = GameStates.LOADINGSCENE;
+				sceneManager._toggleEdit(function () {
+					state = GameStates.RUNNING;
+				});
 			}
 		};
 
-		editGui.add(time, 'timeScale', -2, 2);
-		editGui.add(config, 'debug');
-		editGui.add(lol, 'pause');
+		editGui.config.add(time, 'timeScale', -2, 2);
+		editGui.config.add(config, 'debug');
+		editGui.config.add(lol, 'pause');
 		if (config.engine.editing) {
-			editGui.add(sceneManager, '_toggleEdit');
+			editGui.config.add(lol, 'toggleEdit');
 		}
 	}
 

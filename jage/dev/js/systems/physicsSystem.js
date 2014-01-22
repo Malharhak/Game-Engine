@@ -1,8 +1,8 @@
 define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
- 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering', 'j.physics', 'j.Collision'],
+ 'j.units', 'j.config', 'j.Vector2', 'underscore', 'j.aabb', 'j.Rectangle', 'j.rendering', 'j.physics', 'j.Collision', 'j.Circle', 'j.Rigidbody'],
  function (System, canvas, Shapes, world, time,
  units, config, Vector2, _, aabb, Rectangle, rendering,
- physics, Collision) {
+ physics, Collision, Circle, Rigidbody) {
 	var physicsSystem = new System({
 		usedComponents: ['rigidbody'],
 		globalSystem: true,
@@ -31,7 +31,6 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 			if (rigidbody.fixed) {
 				continue;
 			}
-
 			rigidbody.lastPosition = new Vector2(entity.transform.position);
 			rigidbody.nextPosition = new Vector2(entity.transform.position);
 			physics.applyForce(rigidbody, new Vector2(0, -world.gravity * rigidbody.mass));
@@ -55,8 +54,8 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 				var entity = entities[i];
 				var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
 				var ctxParams = {
-					fillStyle : "rgba(0, 255, 0, 0.3)",
-					strokeStyle : "rgba(0, 255, 0, 0.7)",
+					fillStyle : "rgba(0, 255, 0, 0.1)",
+					strokeStyle : "rgba(0, 255, 0, 0.5)",
 					lineWidth : 2
 				};
 				var drawPos;
@@ -65,7 +64,7 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 						rendering.drawCircle ({
 							ctx : ctxParams,
 							angle: 0,
-							radius: rigidbody.radius,
+							radius: rigidbody.properties.radius,
 							stroke: true,
 							center: entity.transform.position
 						});
@@ -75,9 +74,9 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 							ctx: ctxParams,
 							angle: 0,
 							center: entity.transform.position,
-							start: rigidbody.box.start,
+							start: rigidbody.properties.start,
 							stroke: true,
-							end : rigidbody.box.end
+							end : rigidbody.properties.end
 						});
 					break;
 				}

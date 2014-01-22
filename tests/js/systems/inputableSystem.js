@@ -27,7 +27,7 @@ function (System, inputs, Buttons, physics,
 	};
 
 	inputableSystem.down = function (scene, entity, position) {
-		if (entity.tag === "box") {
+		if (entity !== false && entity.tag === "box") {
 			var rigidbody = scene.getComponentForEntity("rigidbody", entity._id);
 			physics.applyImpulse(rigidbody, new Vector2(0, 4));
 			//console.log("down on ", entity.label);
