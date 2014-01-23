@@ -7,7 +7,14 @@
 		margin: auto;
 	}
 	.j-properties-editor {
+		position : relative;
+		margin-top : 100px;
+	}
+	.j-inspector {
 		position : fixed;
 		top : 0px;
-		right : 250px;
+		right : 0px;
+	}
+	..dg.main.a {
+		margin-top : 50px;
 	}

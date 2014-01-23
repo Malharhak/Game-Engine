@@ -1,6 +1,8 @@
 define(['dat.gui', 'j.propertiesGui', 'jquery'], function (dat, propertiesGui, $) {
 
-	var gui = new dat.GUI();
+	var gui = new dat.GUI({autplace : false});
+	var container = $('.j-inspector');
+	container.append(gui.domElement);
 	gui.addFolder('config');
 	gui.addFolder('tools');
 

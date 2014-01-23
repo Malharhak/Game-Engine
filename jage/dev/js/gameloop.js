@@ -103,7 +103,7 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		resume();
 	});
 
-	if (config.debug) {
+	if (config.engine.debug) {
 		var lol = {
 			pause : function () {
 				togglePause();

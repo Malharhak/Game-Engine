@@ -5,7 +5,7 @@ define(["j.Shapes", 'j.Circle', 'j.Box', 'j.Vector2', 'j.editGui'],
 	shapes[Shapes.BOX] = Box;
 
 	var Rigidbody = function (params) {
-		this.mass = params.mass || 0;
+		this.mass = params.mass || 1;
 		this.lastAcceleration = params.acceleration || new Vector2(0, 0);
 		this.acceleration = this.lastAcceleration;
 		this.forces = params.forces || new Vector2(0, 0);

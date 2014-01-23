@@ -48,7 +48,7 @@ define(['j.System', 'j.canvas', 'j.Shapes', 'j.world', 'j.time',
 	};
 
 	physicsSystem.postRender = function (scene) {
-		if (config.debug) {
+		if (config.engine.debug) {
 			var entities = scene.getEntitiesForComponents(["rigidbody"]);
 			for (var i = 0; i < entities.length; i++) {
 				var entity = entities[i];

@@ -14,7 +14,7 @@ define(['j.System', 'j.canvas', 'j.camera', 'j.units', 'j.config', 'j.rendering'
 				fillStyle : renderer.color
 			},
 			angle : entity.transform.angle,
-			gizmo : config.debug
+			gizmo : config.engine.debug
 		};
 		switch (renderer.shape) {
 			case Shapes.CIRCLE:

@@ -7,7 +7,7 @@ define (['j.System', 'j.canvas', 'j.camera', 'j.world', 'j.config'],
 
 	screenSystem.preRender = function (scene) {
 		canvas.ctx.clearRect(0, 0, camera.box.end.x * world.unitSize, camera.box.end.y * world.unitSize);
-		if (config.debug) {
+		if (config.engine.debug) {
 			canvas.ctx.lineWidth = 1;
 			canvas.ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
 			for (var x = Math.abs(1 - (camera.box.start.x % 1)); x < camera.box.end.x; x++) {

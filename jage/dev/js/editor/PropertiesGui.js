@@ -1,6 +1,7 @@
 define (['jquery', 'dat.gui'], function ($, dat)  {
 	var PropertiesGui = function (params) {
-		this.container = $('<div />').addClass('j-properties-editor').appendTo($('body'));
+		this.container = $('<div />').addClass('j-properties-editor').appendTo($('.j-inspector'));
+		console.log(this.container);
 		this.gui = new dat.GUI({autoplace : false});
 		this.container.append($(this.gui.domElement));
 
