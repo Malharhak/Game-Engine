@@ -1,2 +1,4 @@
 node_modules/*
 tests/bower_components/*
+jage/jage.build.js
+jage/jage.build.js.map
