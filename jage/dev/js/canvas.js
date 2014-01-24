@@ -6,7 +6,7 @@ define (['jquery', 'j.RenderingModes'], function ($, RenderingModes) {
 	Canvas.prototype.init = function (options) {
 		this.options = options;
 		this.container = $(options.mainContainer);
-		this.canvas = $('<canvas />').appendTo(this.container);
+		this.canvas = $('<canvas />').appendTo(this.container).attr('tabindex', 1);
 		switch (options.renderingMode) {
 			case RenderingModes.EXTEND :
 				this.setExtendedMode(options);

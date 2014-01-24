@@ -70,7 +70,8 @@ define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey', 'j.mouse'],
 		$(window).on('mouseup', function (event) {
 			self.onUp (event);
 		});
-		$(window).on('keydown', function (event) {
+		canvas.container.on('keydown', function (event) {
+			console.log("allo");
 			var key = event.keyCode || event.which;
 			for (var i in ButtonsMapping) {
 				if (ButtonsMapping[i][1] === key) {
@@ -81,7 +82,7 @@ define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey', 'j.mouse'],
 			return false;
 		});
 
-		$(window).on('keyup', function (event) {
+		canvas.canvas.on('keyup', function (event) {
 			var key = event.keyCode || event.which;
 			for (var i in ButtonsMapping) {
 				if (ButtonsMapping[i][1] === key) {

@@ -82,6 +82,9 @@ requirejs.config ({
 		'j.pageVisibility' : 'utils/pageVisibility',
 		'j.editGui' 	: 'utils/editGui',
 
+		// Assets
+		'j.images' : 'utils/imageManager',
+
 		// Rendering
 		'j.rendering' : 'rendering/rendering',
 
