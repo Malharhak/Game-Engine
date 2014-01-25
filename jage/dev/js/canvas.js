@@ -6,7 +6,9 @@ define (['jquery', 'j.RenderingModes'], function ($, RenderingModes) {
 	Canvas.prototype.init = function (options) {
 		this.options = options;
 		this.container = $(options.mainContainer);
-		this.canvas = $('<canvas />').appendTo(this.container).attr('tabindex', 1);
+		this.canvas = $('<canvas />').appendTo(this.container).attr({
+			'tabindex' : 1,
+			'autofocus' : true });
 		switch (options.renderingMode) {
 			case RenderingModes.EXTEND :
 				this.setExtendedMode(options);
@@ -16,6 +18,7 @@ define (['jquery', 'j.RenderingModes'], function ($, RenderingModes) {
 			break;
 		}
 		this.ctx = this.canvas[0].getContext('2d');
+		this.canvas.focus();
 	};
 
 	Canvas.prototype.setSize = function (width, height) {
@@ -60,6 +63,7 @@ define (['jquery', 'j.RenderingModes'], function ($, RenderingModes) {
 		var self = this;
 		this.container.on(evt, function (event) {
 			callback(self.processMouseEvent(event));
+			self.canvas.focus();
 		});
 	};
 

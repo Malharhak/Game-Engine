@@ -71,7 +71,6 @@ define(['j.ButtonsMapping', 'j.canvas', 'j.GameKey', 'j.mouse'],
 			self.onUp (event);
 		});
 		canvas.container.on('keydown', function (event) {
-			console.log("allo");
 			var key = event.keyCode || event.which;
 			for (var i in ButtonsMapping) {
 				if (ButtonsMapping[i][1] === key) {
