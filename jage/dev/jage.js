@@ -84,6 +84,7 @@ requirejs.config ({
 
 		// Assets
 		'j.images' : 'utils/imageManager',
+		'j.assets' : 'assetsManager',
 
 		// Rendering
 		'j.rendering' : 'rendering/rendering',

@@ -6,7 +6,8 @@ define (['j.System', 'j.canvas', 'j.camera', 'j.world', 'j.config'],
 	});
 
 	screenSystem.preRender = function (scene) {
-		canvas.ctx.clearRect(0, 0, camera.box.end.x * world.unitSize, camera.box.end.y * world.unitSize);
+		canvas.ctx.fillStyle = "#7777bb";
+		canvas.ctx.fillRect(0, 0, camera.box.end.x * world.unitSize, camera.box.end.y * world.unitSize);
 		if (config.engine.debug) {
 			canvas.ctx.lineWidth = 1;
 			canvas.ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
@@ -17,7 +18,7 @@ define (['j.System', 'j.canvas', 'j.camera', 'j.world', 'j.config'],
 					canvas.ctx.closePath();
 					canvas.ctx.stroke();
 			}
-			for (var y = Math.abs(1 - (camera.box.start.y % 1)) ; y < camera.box.end.y; y++) {
+			for (var y = Math.abs(camera.box.start.y) ; y > 0 ; y--) {
 					canvas.ctx.beginPath();
 					canvas.ctx.moveTo (0 , y * world.unitSize);
 					canvas.ctx.lineTo (camera.box.end.x * world.unitSize, y * world.unitSize);
