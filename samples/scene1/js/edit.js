@@ -1,10 +1,11 @@
 define (['j.main', 'j.componentTypes', 'scenes/main', 'j.sceneManager',
-	'components/Player', 'systems/playerSystem', 'j.systems', 'j.componentTypes'],
+	'components/Player', 'systems/playerSystem', 'j.systems', 'j.componentTypes',
+ 'editConfig'],
 function (j, componentTypes, mainScene, sceneManager,
-	player, playerSystem, systems, componentTypes) {
+	player, playerSystem, systems, componentTypes, config) {
 
 	// This is the first entry point for Jage
-	jage.init({}, function () {
+	jage.init(config, function () {
 
 		// We first register our basic scene into the engine
 		sceneManager.registerScene('main', JSON.parse(mainScene));

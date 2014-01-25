@@ -1,9 +1,9 @@
 define (['j.componentTypes', 'j.systems', 'j.defaultComponents', 'j.defaultSystems',
  'j.defaultConfig', 'underscore', 'j.canvas', 'j.emptyScene', 'j.sceneManager',
- 'j.viewport', 'j.camera', 'j.world', 'j.config', 'j.inputs'],
+ 'j.viewport', 'j.camera', 'j.world', 'j.config', 'j.inputs', 'j.editGui'],
  function (componentTypes, systems, defaultComponents, defaultSystems,
   defaultConfig, _, canvas, emptyScene, sceneManager,
-  viewport, camera, world, config, inputs) {
+  viewport, camera, world, config, inputs, editGui) {
 
 
 	config.init(defaultConfig);
@@ -21,6 +21,7 @@ define (['j.componentTypes', 'j.systems', 'j.defaultComponents', 'j.defaultSyste
 		inputs.init();
 		viewport.init (config.screen);
 		camera.init(config.camera);
+
 		sceneManager.loadScene('empty', function () {
 			if (typeof callback === "function") {
 				callback();

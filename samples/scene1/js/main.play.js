@@ -12,6 +12,6 @@
 	});
 	// loading mocha
 	require(['jage'], function () {
-		require(['game'], function () {
+		require(['play'], function () {
 		});
 	});

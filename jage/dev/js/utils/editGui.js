@@ -1,22 +1,23 @@
 define(['dat.gui', 'j.propertiesGui', 'jquery'], function (dat, propertiesGui, $) {
 
-	var gui = new dat.GUI({autplace : false});
-	var container = $('.j-inspector');
-	container.append(gui.domElement);
-	gui.addFolder('config');
-	gui.addFolder('tools');
+	var EditGui = function () {
 
-	function removeFolder (gui, name) {
+	};
+
+	EditGui.prototype.init = function () {
+		this.main = new dat.GUI({autplace : false});
+		var container = $('.j-inspector');
+		container.append(this.main.domElement);
+		this.config = this.main.addFolder('config');
+		this.tools = this.main.addFolder('tools');
+		this.propertiesGui = propertiesGui;
+	};
+
+	EditGui.prototype.removeFolder = function (gui, name) {
 		$(gui.__folders[name].__ul).remove();
 		delete gui.__folders[name];
-	}
-
-	return {
-		main : gui,
-		config : gui.__folders.config,
-		propertiesGui : propertiesGui,
-		tools : gui.__folders.tools,
-		removeFolder : removeFolder
 	};
+
+	return new EditGui();
 
 });

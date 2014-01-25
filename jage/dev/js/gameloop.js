@@ -63,6 +63,35 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		initJage(options, function () {
 			loop();
 
+			if (config.engine.debug) {
+				editGui.init();
+				var lol = {
+					pause : function () {
+						togglePause();
+					},
+					toggleEdit : function () {
+						state = GameStates.LOADINGSCENE;
+						sceneManager._toggleEdit(function () {
+							state = GameStates.RUNNING;
+						});
+					}
+				};
+				var toolsFuncs = {
+					createEntity : function () {
+						sceneManager.activeScene.createDefaultEntity({transform :{
+							position : camera.position
+						}});
+					}
+				};
+
+				editGui.config.add(time, 'timeScale', -2, 2);
+				editGui.config.add(config, 'debug');
+				editGui.config.add(lol, 'pause');
+				if (config.engine.editing) {
+					editGui.config.add(lol, 'toggleEdit');
+				}
+				editGui.tools.add(toolsFuncs, 'createEntity');
+			}
 			state = GameStates.LOADING;
 			load(options, callback);
 		});
@@ -103,34 +132,6 @@ define (['j.GameStates', 'j.sceneManager', 'j.requestAnimFrame',
 		resume();
 	});
 
-	if (config.engine.debug) {
-		var lol = {
-			pause : function () {
-				togglePause();
-			},
-			toggleEdit : function () {
-				state = GameStates.LOADINGSCENE;
-				sceneManager._toggleEdit(function () {
-					state = GameStates.RUNNING;
-				});
-			}
-		};
-		var toolsFuncs = {
-			createEntity : function () {
-				sceneManager.activeScene.createDefaultEntity({transform :{
-					position : camera.position
-				}});
-			}
-		};
-
-		editGui.config.add(time, 'timeScale', -2, 2);
-		editGui.config.add(config, 'debug');
-		editGui.config.add(lol, 'pause');
-		if (config.engine.editing) {
-			editGui.config.add(lol, 'toggleEdit');
-		}
-		editGui.tools.add(toolsFuncs, 'createEntity');
-	}
 
 	return {
 		init: init,
