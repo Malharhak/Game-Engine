@@ -18,10 +18,10 @@ define (['j.System', 'j.canvas', 'j.camera', 'j.world', 'j.config'],
 					canvas.ctx.closePath();
 					canvas.ctx.stroke();
 			}
-			for (var y = Math.abs(camera.box.start.y) ; y > 0 ; y--) {
+			for (var y = (1 - camera.box.start.y % 1) ; y < camera.box.end.y; y++) {
 					canvas.ctx.beginPath();
-					canvas.ctx.moveTo (0 , y * world.unitSize);
-					canvas.ctx.lineTo (camera.box.end.x * world.unitSize, y * world.unitSize);
+					canvas.ctx.moveTo (0 , canvas.height - y * world.unitSize);
+					canvas.ctx.lineTo (camera.box.end.x * world.unitSize, canvas.height - y * world.unitSize);
 					canvas.ctx.closePath();
 					canvas.ctx.stroke();
 			}

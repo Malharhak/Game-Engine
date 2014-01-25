@@ -46,7 +46,6 @@ define(['j.world', 'j.Rectangle', 'j.aabb', 'j.Vector2', 'j.canvas'],
 	Camera.prototype.resizeCallback = function (width, height) {
 		this.width = width;
 		this.height = height;
-		console.log(width, height);
 		this.box.start.x = this.position.x -(width / world.unitSize) / 2;
 		this.box.start.y = this.position.y -(height / world.unitSize) / 2;
 		this.box.end.x = width / world.unitSize;
