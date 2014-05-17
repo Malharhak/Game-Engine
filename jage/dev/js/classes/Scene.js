@@ -184,18 +184,27 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 
 	// Launches an event function, like update, render, animate, inputs...
 	Scene.prototype.launchEV = function (ev) {
-
+		// If the scene knows this event
 		if (typeof this.functionsUsed[ev] === "object") {
+			// Loop through all systems subscribed to it
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
-				var system = systems[systemName];
+				var system = systems[systemName]; // Gets the actual system
+				// Checks if the function can be called - edit mode stuff.
+				// TODO: Find a solution to avoid always checking for editor code when running the game
+				// Maybe editor and play mode should have entirely separated scene code?
 				if (!this.checkEditMode(ev, system) || !this.checkOnlyEditMode(ev, system)) {
 					continue;
 				}
-				if (system.globalSystem || system.masterSystem) {
-					system[ev](this);
+				// Usual systems are called once per entity, global systems are called once, 
+				// and are responsible for fetching entities or whatever they do themselves
+				if (system.globalSystem || system.masterSystem) { // TODO: Choose a single property name, why does it have two versions?
+					system[ev](this); // In case of global system, just call it once
 				} else {
+					//  Gets a list of the component groups corresponding to what the system wants (for example the renderer and rigidbody of every entity that has at least both)
+					// This function in itself calls a pretty big loop, and we're already in nested loops, so.. Performance.
 					var comps = this.getEntitiesForComponents(system.usedComponents);
+					// Loop through them and calls the system with the component group as parameter
 					for (var c = 0; c < comps.length; c++) {
 						system[ev](this, comps[c]);
 					}
@@ -205,8 +214,10 @@ define (['j.ES', 'underscore', 'j.systems', 'j.componentTypes', 'j.world', 'j.ti
 
 	};
 
-
+	// Like the launch event function, but this one is associated with an entity. 
+	// For example in case of a physics collision an event is called for the entity collided
 	Scene.prototype.entityEvent = function (ev, entity, params) {
+		// Basically redundant code, same thing as the previous function, the only difference is that we run it for a single entity instead of  all of them
 		if (typeof this.functionsUsed[ev] === "object") {
 			for (var i = 0; i < this.functionsUsed[ev].length; i++) {
 				var systemName = this.functionsUsed[ev][i];
